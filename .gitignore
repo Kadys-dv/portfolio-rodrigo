@@ -1,0 +1,13 @@
+.DS_Store
+Thumbs.db
+.firebase/
+node_modules/
+_cert_*
+certificado-temp*
+certificado-check.png
+certificados-contato.jpg
+preview-*.png
+*-preview.png
+emulacao-*.png
+github-browser.png
+serve-test*.log

@@ -1,0 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+@import url('./core.css');
+
+html,body{max-width:100%;overflow-x:hidden}.hero-grid>*{min-width:0}.code-card pre{overflow-wrap:anywhere}
+.reveal{opacity:1;transform:none}.js .reveal{opacity:0;transform:translateY(24px)}.js .reveal.visible{opacity:1;transform:none}.cert-grid:not(.expanded) .cert-card:nth-child(n+7){display:block}.cert-more{display:none}.js .cert-grid:not(.expanded) .cert-card:nth-child(n+7){display:none}.js .cert-more{display:block}
+@media(max-width:620px){.hero-grid{display:block;width:100%}.hero-copy,.hero-art{width:100%;min-width:0;max-width:100%}.hero h1{font-size:clamp(2.8rem,13vw,3.6rem);overflow-wrap:anywhere}.lead{width:100%;max-width:100%;overflow-wrap:anywhere}.actions{width:100%}}
