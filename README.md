@@ -1,6 +1,22 @@
-# Portfólio Rodrigo
+# Portfólio — Rodrigo Marcelo dos Santos
 
-Portfólio profissional independente, criado com HTML, CSS e JavaScript modular.
+Portfólio profissional de um desenvolvedor web e mobile, com o PlayMatch como estudo de caso principal, currículo imprimível e certificações verificáveis.
+
+## Acessar
+
+- Portfólio: <https://kadys-dv.github.io/portfolio-rodrigo/>
+- Currículo: <https://kadys-dv.github.io/portfolio-rodrigo/curriculo.html>
+- LinkedIn: <https://www.linkedin.com/in/rodrigo-marcelo-dos-santos-2851a4429/>
+
+## Recursos
+
+- Design responsivo e acessível
+- Tema claro e escuro
+- Estudo de caso interativo do PlayMatch
+- 18 certificados DIO com documentos originais
+- Currículo preparado para impressão ou PDF
+- SEO, Open Graph, dados estruturados, sitemap e robots
+- Testes automáticos e publicação contínua no GitHub Pages
 
 ## Estrutura
 
@@ -25,8 +41,10 @@ npx serve .
 
 Abrir `index.html` diretamente também funciona para pré-visualização por meio do adaptador `js/file-preview.js`. Para desenvolvimento e publicação, prefira o servidor local.
 
-## Antes de publicar
+## Qualidade
 
-Substitua em `index.html`:
+```powershell
+npm test
+```
 
-Depois, revise o texto de apresentação e acrescente seus próximos projetos.
+Os testes validam arquivos referenciados, contatos, certificados, SEO e marcadores pendentes.

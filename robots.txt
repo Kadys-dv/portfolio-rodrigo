@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kadys-dv.github.io/portfolio-rodrigo/sitemap.xml
