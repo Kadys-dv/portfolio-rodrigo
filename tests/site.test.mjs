@@ -93,6 +93,15 @@ test('currículo informa o nível de inglês', async () => {
   assert.match(html, /Inglês básico/);
 });
 
+test('currículo apresenta competências full stack desenvolvidas nos projetos', async () => {
+  const html = await read('curriculo.html');
+  for (const skill of ['Spring Boot', 'PostgreSQL', 'Docker', 'Next.js', 'TypeScript', 'Arquitetura BFF', 'CI/CD', 'Análise de logs']) {
+    assert.ok(html.includes(skill), `Competência ausente no currículo: ${skill}`);
+  }
+  assert.match(html, /Plataforma MatchHub — Desenvolvimento Full Stack/);
+  assert.match(html, /Projeto independente publicado/);
+});
+
 test('MatchHub API possui estudo de caso e repositório no portfólio', async () => {
   const html = await read('index.html');
   assert.match(html, /id="matchhub-title">MatchHub API/);
