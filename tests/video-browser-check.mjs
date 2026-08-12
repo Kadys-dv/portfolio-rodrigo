@@ -1,7 +1,7 @@
 import { chromium } from 'playwright';
 
 const browser = await chromium.launch({
-  headless: true,
+  headless: process.env.HEADED !== '1',
   executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
   args: ['--autoplay-policy=user-gesture-required'],
 });

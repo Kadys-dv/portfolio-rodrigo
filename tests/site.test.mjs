@@ -76,15 +76,15 @@ test('vídeo inicia uma vez ao entrar na área visível', async () => {
   assert.match(html, /<video[^>]+controls[^>]+muted[^>]+playsinline[^>]+data-demo-autoplay/);
   assert.match(module, /IntersectionObserver/);
   assert.match(module, /intersectionRatio >= 0\.2/);
-  assert.match(module, /observer\.unobserve\(video\)/);
-  assert.match(module, /prefers-reduced-motion/);
+  assert.match(module, /observer\?\.unobserve\(video\)/);
+  assert.match(module, /addEventListener\('canplay', attemptPlay\)/);
 });
 
 test('observador aciona a reprodução automática do vídeo', async () => {
   let callback;
   let playCalls = 0;
   let unobserveCalls = 0;
-  const video = { muted: false, play: () => { playCalls += 1; return Promise.resolve(); } };
+  const video = { muted: false, play: () => { playCalls += 1; return Promise.resolve(); }, addEventListener() {} };
   globalThis.document = { querySelector: selector => selector === '[data-demo-autoplay]' ? video : null };
   globalThis.matchMedia = () => ({ matches: false });
   globalThis.window = { IntersectionObserver: true };
@@ -98,6 +98,7 @@ test('observador aciona a reprodução automática do vídeo', async () => {
   const { initVideoAutoplay } = await import(`${moduleUrl}?test=${Date.now()}`);
   initVideoAutoplay();
   callback([{ isIntersecting: true, intersectionRatio: 0.2 }]);
+  await Promise.resolve();
 
   assert.equal(video.muted, true);
   assert.equal(playCalls, 1);
