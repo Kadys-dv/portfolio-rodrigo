@@ -109,7 +109,8 @@ test('contato abre o Gmail e destaca as redes profissionais', async () => {
   assert.doesNotMatch(html, /data-copy-email|Copiar e-mail/);
   assert.match(html, /class="button social-button linkedin-button"/);
   assert.match(html, /class="button social-button github-button"/);
-  assert.equal((html.match(/<svg viewBox="0 0 24 24"/g) ?? []).length, 2);
+  assert.match(html, /class="button social-button whatsapp-button"/);
+  assert.match(html, /https:\/\/wa\.me\/5513996690378\?text=/);
   assert.doesNotMatch(html, /O botão abre uma nova mensagem no Gmail/);
 });
 

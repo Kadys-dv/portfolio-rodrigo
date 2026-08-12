@@ -16,12 +16,20 @@ for (const viewport of [{ name: 'desktop', width: 1440, height: 1000 }, { name: 
     copyButton: Boolean(section.querySelector('[data-copy-email]')),
     linkedinIcon: Boolean(section.querySelector('.linkedin-button svg')),
     githubIcon: Boolean(section.querySelector('.github-button svg')),
+    whatsappIcon: Boolean(section.querySelector('.whatsapp-button svg')),
     linkedinUrl: section.querySelector('.linkedin-button')?.href,
     githubUrl: section.querySelector('.github-button')?.href,
+    whatsappUrl: section.querySelector('.whatsapp-button')?.href,
   }));
+  const popupPromise = page.waitForEvent('popup');
+  await page.locator('.whatsapp-button').click();
+  const whatsappPage = await popupPromise;
+  await whatsappPage.waitForLoadState('domcontentloaded').catch(() => {});
+  result.whatsappDestination = whatsappPage.url();
+  await whatsappPage.close();
   await page.screenshot({ path: `${process.env.TEMP}\\portfolio-contact-${viewport.name}.png` });
   console.log(JSON.stringify({ viewport: viewport.name, result, errors }));
-  if (result.copyButton || !result.linkedinIcon || !result.githubIcon || errors.length) process.exitCode = 1;
+  if (result.copyButton || !result.linkedinIcon || !result.githubIcon || !result.whatsappIcon || !result.whatsappUrl?.startsWith('https://wa.me/5513996690378') || !/whatsapp\.com|wa\.me/.test(result.whatsappDestination) || errors.length) process.exitCode = 1;
   await page.close();
 }
 
