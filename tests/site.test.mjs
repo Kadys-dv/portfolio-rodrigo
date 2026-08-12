@@ -68,6 +68,14 @@ test('assinatura profissional está presente no rodapé', async () => {
   assert.match(html, /Desenvolvido por Dev Rodrigo • Todos os direitos reservados/);
 });
 
+test('foto, currículo e carta profissionais estão disponíveis', async () => {
+  const pages = await Promise.all(['index.html', 'curriculo.html', 'carta-apresentacao.html'].map(read));
+  assert.ok(pages.every(page => page.includes('assets/profile/rodrigo.jpg')));
+  for (const path of ['assets/profile/rodrigo.jpg', 'assets/documentos/curriculo-rodrigo.pdf', 'assets/documentos/carta-apresentacao-rodrigo.pdf']) {
+    await assert.doesNotReject(access(resolve(root, path)), `Arquivo ausente: ${path}`);
+  }
+});
+
 test('vídeo inicia uma vez ao entrar na área visível', async () => {
   const [html, module] = await Promise.all([
     read('index.html'),
