@@ -1,6 +1,6 @@
 # Portfólio — Rodrigo Marcelo dos Santos
 
-Portfólio profissional de um desenvolvedor web, mobile e backend, com PlayMatch e MatchHub API como estudos de caso reais, currículo imprimível e certificações verificáveis.
+Portfólio profissional de desenvolvimento web, mobile e backend, com PlayMatch, MatchHub API e MatchHub Dashboard apresentados como produtos reais.
 
 ## Acessar
 
@@ -9,45 +9,31 @@ Portfólio profissional de um desenvolvedor web, mobile e backend, com PlayMatch
 - Carta de apresentação: <https://kadys-dv.github.io/portfolio-rodrigo/carta-apresentacao.html>
 - LinkedIn: <https://www.linkedin.com/in/rodrigo-marcelo-dos-santos-2851a4429/>
 
-## Recursos
+## Destaques
 
-- Design responsivo e acessível
-- Tema claro e escuro
-- Estudo de caso interativo do PlayMatch
-- Estudo de caso backend da MatchHub API em Java e Spring Boot
-- 18 certificados DIO com documentos originais
-- Currículo preparado para impressão ou PDF
-- Foto profissional e carta de apresentação com download em PDF
-- SEO, Open Graph, dados estruturados, sitemap e robots
-- Testes automáticos e publicação contínua no GitHub Pages
-
-## Estrutura
-
-```text
-assets/                 imagens públicas e prévias
-certificados/           PDFs originais
-js/main.js              inicialização da aplicação
-js/modules/             módulos de interface e comportamento
-js/utils/               utilitários compartilhados
-styles/main.css         entrada dos estilos
-styles/core.css         design system, componentes e responsividade
-index.html              conteúdo semântico da página
-```
+- Estudo de caso mobile do PlayMatch com vídeo gravado em dispositivo real
+- Backend MatchHub API em Java, Spring Boot, PostgreSQL e Docker
+- Dashboard administrativo em Next.js, React e TypeScript
+- Design responsivo, acessível e com temas claro e escuro
+- Certificados verificáveis, currículo e carta de apresentação
+- SEO, Open Graph, dados estruturados, sitemap e testes automatizados
 
 ## Executar localmente
 
-Como o JavaScript utiliza módulos ES, execute por um servidor local:
-
 ```powershell
-npx serve .
+npm install
+npm run serve
 ```
 
-Abrir `index.html` diretamente também funciona para pré-visualização por meio do adaptador `js/file-preview.js`. Para desenvolvimento e publicação, prefira o servidor local.
+Abra <http://127.0.0.1:4173>.
 
 ## Qualidade
 
 ```powershell
-npm test
+npm run check
+npm run test:layout
 ```
 
-Os testes validam arquivos referenciados, contatos, certificados, SEO e marcadores pendentes.
+A captura do dashboard usa `MATCHHUB_DEMO_EMAIL` e `MATCHHUB_DEMO_PASSWORD` definidos somente no ambiente local; nenhuma credencial é versionada.
+
+Desenvolvido por Dev Rodrigo • Todos os direitos reservados.

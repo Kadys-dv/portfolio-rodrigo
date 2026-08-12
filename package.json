@@ -6,9 +6,12 @@
   "scripts": {
     "test": "node --test",
     "check": "node --check js/main.js && node --test",
-    "test:video": "node tests/video-browser-check.mjs"
+    "test:video": "node tests/video-browser-check.mjs",
+    "test:layout": "node tests/layout-browser-check.mjs && node tests/mobile-alignment-browser-check.mjs",
+    "serve": "http-server . -p 4173 -a 127.0.0.1 -c-1"
   },
   "devDependencies": {
+    "http-server": "^14.1.1",
     "playwright": "^1.62.1"
   }
 }

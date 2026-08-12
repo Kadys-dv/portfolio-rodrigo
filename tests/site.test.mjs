@@ -115,6 +115,16 @@ test('contato abre o Gmail e destaca as redes profissionais', async () => {
   assert.doesNotMatch(html, /O botão abre uma nova mensagem no Gmail/);
 });
 
+test('MatchHub Dashboard possui estudo de caso full stack', async () => {
+  const html = await read('index.html');
+  assert.match(html, /id="dashboard-title">PlayMatch MatchHub/);
+  assert.match(html, /assets\/matchhub\/dashboard\.png/);
+  for (const technology of ['Next.js 16', 'React 19', 'TypeScript', 'Tailwind CSS', 'Vitest']) {
+    assert.ok(html.includes(technology), `Tecnologia do dashboard ausente: ${technology}`);
+  }
+  await assert.doesNotReject(access(resolve(root, 'assets/matchhub/dashboard.png')));
+});
+
 test('vídeo inicia uma vez ao entrar na área visível', async () => {
   const [html, module] = await Promise.all([
     read('index.html'),
