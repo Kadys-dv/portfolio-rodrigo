@@ -32,6 +32,11 @@ test('SEO essencial está configurado', async () => {
   assert.equal((html.match(/<h1/g) ?? []).length, 1);
 });
 
+test('folha de estilos possui versão para evitar cache antigo', async () => {
+  const html = await read('index.html');
+  assert.match(html, /styles\/main\.css\?v=\d{8}-\d+/);
+});
+
 test('certificados têm prévia e PDF', async () => {
   const html = await read('index.html');
   assert.equal((html.match(/class="cert-card reveal"/g) ?? []).length, 18);
