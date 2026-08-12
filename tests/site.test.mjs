@@ -116,7 +116,8 @@ test('blocos de código usam animação de digitação acessível', async () => 
   assert.match(main, /initCodeTyping/);
   assert.match(module, /IntersectionObserver/);
   assert.match(module, /prefers-reduced-motion/);
-  assert.match(module, /typing-layer/);
+  assert.match(module, /pre\.textContent = source\.slice/);
+  assert.doesNotMatch(module, /createElement\(['"]pre['"]\)/);
   assert.match(css, /typing-caret/);
   assert.match(css, /transform-style:preserve-3d/);
 });

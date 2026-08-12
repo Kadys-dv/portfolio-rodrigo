@@ -1,28 +1,19 @@
-function createTypingLayer(pre) {
-  if (pre.dataset.typingReady === 'true') return null;
-  pre.dataset.typingReady = 'true';
-  const layer = document.createElement('pre');
-  layer.className = 'typing-layer';
-  layer.setAttribute('aria-hidden', 'true');
-  pre.insertAdjacentElement('afterend', layer);
-  return layer;
-}
-
 function typeCode(pre) {
-  const layer = createTypingLayer(pre);
-  if (!layer) return;
+  if (pre.dataset.typingReady === 'true') return;
+  pre.dataset.typingReady = 'true';
   const source = pre.textContent ?? '';
   const richCode = pre.innerHTML;
   const startedAt = performance.now();
-  pre.classList.add('typing-source');
-  layer.classList.add('is-typing');
+  pre.setAttribute('aria-label', source.trim());
+  pre.classList.add('is-typing');
+
   const frame = now => {
     const progress = Math.min((now - startedAt) / 2600, 1);
-    layer.textContent = source.slice(0, Math.max(1, Math.floor(source.length * progress)));
+    pre.textContent = source.slice(0, Math.max(1, Math.floor(source.length * progress)));
     if (progress < 1) requestAnimationFrame(frame);
     else {
-      layer.innerHTML = richCode;
-      layer.classList.remove('is-typing');
+      pre.innerHTML = richCode;
+      pre.classList.remove('is-typing');
     }
   };
   requestAnimationFrame(frame);
