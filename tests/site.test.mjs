@@ -110,6 +110,7 @@ test('contato abre o Gmail e destaca as redes profissionais', async () => {
   assert.match(html, /class="button social-button linkedin-button"/);
   assert.match(html, /class="button social-button github-button"/);
   assert.equal((html.match(/<svg viewBox="0 0 24 24"/g) ?? []).length, 2);
+  assert.doesNotMatch(html, /O botão abre uma nova mensagem no Gmail/);
 });
 
 test('vídeo inicia uma vez ao entrar na área visível', async () => {
