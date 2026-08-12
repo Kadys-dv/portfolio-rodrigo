@@ -101,6 +101,24 @@ test('MatchHub API possui estudo de caso e repositório no portfólio', async ()
     assert.ok(html.includes(technology), `Tecnologia ausente: ${technology}`);
   }
   assert.match(html, /CI validada no GitHub Actions/);
+  const caseStudy = await read('projetos/matchhub-api.html');
+  assert.match(caseStudy, /href="#arquitetura"/);
+  assert.doesNotMatch(caseStudy, />Saúde da API</);
+  assert.doesNotMatch(caseStudy, /href="https:\/\/matchhub-api-43bv\.onrender\.com\/actuator\/health"/);
+});
+
+test('blocos de código usam animação de digitação acessível', async () => {
+  const [main, module, css] = await Promise.all([
+    read('js/main.js'),
+    read('js/modules/code-typing.js'),
+    read('styles/main.css'),
+  ]);
+  assert.match(main, /initCodeTyping/);
+  assert.match(module, /IntersectionObserver/);
+  assert.match(module, /prefers-reduced-motion/);
+  assert.match(module, /typing-layer/);
+  assert.match(css, /typing-caret/);
+  assert.match(css, /transform-style:preserve-3d/);
 });
 
 test('contato abre o Gmail e destaca as redes profissionais', async () => {

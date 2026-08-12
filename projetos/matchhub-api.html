@@ -1,16 +1,274 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Estudo de caso da MatchHub API em Java, Spring Boot, PostgreSQL, JWT, Flyway e Docker."><meta name="theme-color" content="#071c16"><meta name="robots" content="index,follow"><link rel="canonical" href="https://kadys-dv.github.io/portfolio-rodrigo/projetos/matchhub-api.html"><meta property="og:title" content="MatchHub API — Estudo de caso"><meta property="og:description" content="Backend transacional para partidas, usuários e moderação."><meta property="og:type" content="article"><title>MatchHub API — Estudo de caso | Rodrigo.dev</title><link rel="icon" href="../favicon.svg"><link rel="stylesheet" href="../styles/case-study.css?v=20260812-1"><script type="module" src="../js/main.js?v=20260811-4"></script></head>
-<body class="project-page"><a class="skip-link" href="#conteudo">Ir para o conteúdo</a><header class="header"><nav class="nav container"><a class="brand" href="../index.html"><span>R</span>Rodrigo.dev</a><div class="menu"><a href="../index.html#projetos">Todos os projetos</a><a href="matchhub-dashboard.html">Próximo estudo</a><button class="theme-button" type="button" data-theme-toggle><span class="theme-icon">◐</span><span class="theme-label" data-theme-label>Tema claro</span></button></div></nav></header>
-<main id="conteudo"><section class="case-hero"><div class="container"><a class="case-breadcrumb" href="../index.html#projetos">← Voltar ao portfólio</a><div class="case-hero-grid"><div><p class="case-kicker">Backend · Java · Cloud</p><h1>MatchHub API</h1><p class="case-lead">API REST que centraliza autenticação, partidas, participações e moderação com regras consistentes no servidor.</p><div class="actions"><a class="button primary" href="https://github.com/Kadys-dv/matchhub-api" target="_blank" rel="noopener">Ver código no GitHub</a><a class="button secondary" href="https://matchhub-api-43bv.onrender.com/actuator/health" target="_blank" rel="noopener">Saúde da API</a></div></div><div class="case-cover"><div class="code-window"><div class="code-bar"><i></i><i></i><i></i><span>POST /api/v1/matches/{id}/participants/me</span></div><pre><b>Authorization:</b> Bearer &lt;JWT&gt;
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Estudo de caso da MatchHub API em Java, Spring Boot, PostgreSQL, JWT, Flyway e Docker."
+    />
+    <meta name="theme-color" content="#071c16" />
+    <meta name="robots" content="index,follow" />
+    <link
+      rel="canonical"
+      href="https://kadys-dv.github.io/portfolio-rodrigo/projetos/matchhub-api.html"
+    />
+    <meta property="og:title" content="MatchHub API — Estudo de caso" />
+    <meta
+      property="og:description"
+      content="Backend transacional para partidas, usuários e moderação."
+    />
+    <meta property="og:type" content="article" />
+    <title>MatchHub API — Estudo de caso | Rodrigo.dev</title>
+    <link rel="icon" href="../favicon.svg" />
+    <link rel="stylesheet" href="../styles/case-study.css?v=20260812-8" />
+    <script type="module" src="../js/main.js?v=20260812-7"></script>
+  </head>
+  <body class="project-page">
+    <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+    <header class="header">
+      <nav class="nav container">
+        <a class="brand" href="../index.html"><span>R</span>Rodrigo.dev</a>
+        <div class="menu">
+          <a href="../index.html#projetos">Todos os projetos</a
+          ><a href="matchhub-dashboard.html">Próximo estudo</a
+          ><button class="theme-button" type="button" data-theme-toggle>
+            <span class="theme-icon">◐</span
+            ><span class="theme-label" data-theme-label>Tema claro</span>
+          </button>
+        </div>
+      </nav>
+    </header>
+    <main id="conteudo">
+      <section class="case-hero">
+        <div class="container">
+          <a class="case-breadcrumb" href="../index.html#projetos"
+            >← Voltar ao portfólio</a
+          >
+          <div class="case-hero-grid">
+            <div>
+              <p class="case-kicker">Backend · Java · Cloud</p>
+              <h1>MatchHub API</h1>
+              <p class="case-lead">
+                API REST que centraliza autenticação, partidas, participações e
+                moderação com regras consistentes no servidor.
+              </p>
+              <div class="actions">
+                <a
+                  class="button primary"
+                  href="https://github.com/Kadys-dv/matchhub-api"
+                  target="_blank"
+                  rel="noopener"
+                  >Ver código no GitHub</a
+                ><a class="button secondary" href="#arquitetura"
+                  >Explorar arquitetura</a
+                >
+              </div>
+            </div>
+            <div class="case-cover">
+              <div class="code-window">
+                <div class="code-bar">
+                  <i></i><i></i><i></i
+                  ><span>POST /api/v1/matches/{id}/participants/me</span>
+                </div>
+                <pre><b>Authorization:</b> Bearer &lt;JWT&gt;
 
 <span>HTTP/1.1 200 OK</span>
 {
   "status": "OPEN",
   "confirmed": 9,
   "capacity": 10
-}</pre></div></div></div><div class="fact-grid"><article><small>Linguagem</small><strong>Java 21</strong></article><article><small>Framework</small><strong>Spring Boot 4</strong></article><article><small>Banco</small><strong>PostgreSQL 17</strong></article><article><small>Produção</small><strong>Render + Neon</strong></article></div></div></section>
-<section class="case-section alt"><div class="container"><p class="case-kicker">O problema</p><h2>Regras críticas não podem depender apenas da interface.</h2><div class="content-grid"><article class="content-card"><h3>Concorrência de vagas</h3><p>Duas solicitações simultâneas não podem ocupar a última vaga nem gerar contagens divergentes.</p></article><article class="content-card"><h3>Autorização</h3><p>Jogadores, organizadores e administradores precisam receber permissões diferentes.</p></article><article class="content-card"><h3>Ciclo da partida</h3><p>Criar, participar, desistir, concluir e cancelar exigem transições válidas.</p></article><article class="content-card"><h3>Moderação</h3><p>Denúncias e bloqueios precisam ser acessíveis somente por papéis autorizados.</p></article></div></div></section>
-<section class="case-section"><div class="container"><p class="case-kicker">Decisões técnicas</p><h2>Organizada por domínio, segura por padrão e reproduzível.</h2><div class="content-grid"><article class="content-card"><h3>Segurança</h3><ul><li>JWT e papéis PLAYER/ADMIN</li><li>Senhas com BCrypt</li><li>Rotas fechadas por padrão</li></ul></article><article class="content-card"><h3>Consistência</h3><ul><li>Transações de serviço</li><li>Bloqueio pessimista para vagas</li><li>Versionamento otimista</li></ul></article><article class="content-card"><h3>Persistência</h3><ul><li>PostgreSQL em produção</li><li>3 migrations com Flyway</li><li>Validação de esquema</li></ul></article><article class="content-card"><h3>Operação</h3><ul><li>Docker multi-stage</li><li>Actuator e health check</li><li>Identificador nos logs</li></ul></article></div></div></section>
-<section class="case-section alt"><div class="container"><p class="case-kicker">Arquitetura</p><h2>Responsabilidades separadas em camadas claras.</h2><div class="architecture"><article><strong>REST Controllers</strong><small>Contrato e validação</small></article><span>→</span><article><strong>Spring Security</strong><small>JWT e autorização</small></article><span>→</span><article><strong>Services</strong><small>Regras e transações</small></article><span>→</span><article><strong>JPA + PostgreSQL</strong><small>Persistência</small></article></div></div></section>
-<section class="case-section"><div class="container"><p class="case-kicker">Testes e desafios</p><h2>Fluxos arriscados exercitados como integrações reais.</h2><div class="content-grid"><article class="content-card"><h3>Cobertura</h3><ul><li>Cadastro, login e validações</li><li>Criação, entrada e desistência</li><li>Conclusão pelo organizador</li><li>Denúncias e administração</li></ul></article><article class="content-card"><h3>Desafios resolvidos</h3><ul><li>Proxy HTTPS e rotas públicas</li><li>Inicialização no plano gratuito</li><li>Migração automática no Neon</li><li>Segredos fora do repositório</li></ul></article></div></div></section>
-<section class="case-section alt"><div class="container"><p class="case-kicker">Resultados verificáveis</p><h2>Backend publicado, monitorável e validado automaticamente.</h2><div class="results-grid"><article class="result-card"><strong>4 testes</strong><p>Integrações cobrindo autenticação, partidas e administração.</p></article><article class="result-card"><strong>3 migrations</strong><p>Evolução reproduzível do banco até o esquema atual.</p></article><article class="result-card"><strong>HTTP 200</strong><p>Health check confirmado na API publicada em HTTPS.</p></article></div></div></section>
-<section class="case-cta"><div class="container case-cta-card"><h2>Veja quem consome essa API.</h2><p>O Dashboard transforma as regras do backend em uma central administrativa.</p><div class="actions"><a class="button light" href="matchhub-dashboard.html">Conhecer o dashboard →</a><a class="button outline" href="../index.html#contato">Falar com Rodrigo</a></div></div></section></main><footer><div class="container footer-inner"><a class="brand" href="../index.html"><span>R</span>Rodrigo.dev</a><p>Desenvolvido por Dev Rodrigo • Todos os direitos reservados • <span data-year></span></p></div></footer></body></html>
+}</pre>
+              </div>
+            </div>
+          </div>
+          <div class="fact-grid">
+            <article><small>Linguagem</small><strong>Java 21</strong></article>
+            <article>
+              <small>Framework</small><strong>Spring Boot 4</strong>
+            </article>
+            <article>
+              <small>Banco</small><strong>PostgreSQL 17</strong>
+            </article>
+            <article>
+              <small>Produção</small><strong>Render + Neon</strong>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="case-section alt" id="arquitetura">
+        <div class="container">
+          <p class="case-kicker">O problema</p>
+          <h2>Regras críticas não podem depender apenas da interface.</h2>
+          <div class="content-grid">
+            <article class="content-card">
+              <h3>Concorrência de vagas</h3>
+              <p>
+                Duas solicitações simultâneas não podem ocupar a última vaga nem
+                gerar contagens divergentes.
+              </p>
+            </article>
+            <article class="content-card">
+              <h3>Autorização</h3>
+              <p>
+                Jogadores, organizadores e administradores precisam receber
+                permissões diferentes.
+              </p>
+            </article>
+            <article class="content-card">
+              <h3>Ciclo da partida</h3>
+              <p>
+                Criar, participar, desistir, concluir e cancelar exigem
+                transições válidas.
+              </p>
+            </article>
+            <article class="content-card">
+              <h3>Moderação</h3>
+              <p>
+                Denúncias e bloqueios precisam ser acessíveis somente por papéis
+                autorizados.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="case-section">
+        <div class="container">
+          <p class="case-kicker">Decisões técnicas</p>
+          <h2>Organizada por domínio, segura por padrão e reproduzível.</h2>
+          <div class="content-grid">
+            <article class="content-card">
+              <h3>Segurança</h3>
+              <ul>
+                <li>JWT e papéis PLAYER/ADMIN</li>
+                <li>Senhas com BCrypt</li>
+                <li>Rotas fechadas por padrão</li>
+              </ul>
+            </article>
+            <article class="content-card">
+              <h3>Consistência</h3>
+              <ul>
+                <li>Transações de serviço</li>
+                <li>Bloqueio pessimista para vagas</li>
+                <li>Versionamento otimista</li>
+              </ul>
+            </article>
+            <article class="content-card">
+              <h3>Persistência</h3>
+              <ul>
+                <li>PostgreSQL em produção</li>
+                <li>3 migrations com Flyway</li>
+                <li>Validação de esquema</li>
+              </ul>
+            </article>
+            <article class="content-card">
+              <h3>Operação</h3>
+              <ul>
+                <li>Docker multi-stage</li>
+                <li>Actuator e health check</li>
+                <li>Identificador nos logs</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="case-section alt">
+        <div class="container">
+          <p class="case-kicker">Arquitetura</p>
+          <h2>Responsabilidades separadas em camadas claras.</h2>
+          <div class="architecture">
+            <article>
+              <strong>REST Controllers</strong
+              ><small>Contrato e validação</small>
+            </article>
+            <span>→</span>
+            <article>
+              <strong>Spring Security</strong><small>JWT e autorização</small>
+            </article>
+            <span>→</span>
+            <article>
+              <strong>Services</strong><small>Regras e transações</small>
+            </article>
+            <span>→</span>
+            <article>
+              <strong>JPA + PostgreSQL</strong><small>Persistência</small>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="case-section">
+        <div class="container">
+          <p class="case-kicker">Testes e desafios</p>
+          <h2>Fluxos arriscados exercitados como integrações reais.</h2>
+          <div class="content-grid">
+            <article class="content-card">
+              <h3>Cobertura</h3>
+              <ul>
+                <li>Cadastro, login e validações</li>
+                <li>Criação, entrada e desistência</li>
+                <li>Conclusão pelo organizador</li>
+                <li>Denúncias e administração</li>
+              </ul>
+            </article>
+            <article class="content-card">
+              <h3>Desafios resolvidos</h3>
+              <ul>
+                <li>Proxy HTTPS e rotas públicas</li>
+                <li>Inicialização no plano gratuito</li>
+                <li>Migração automática no Neon</li>
+                <li>Segredos fora do repositório</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="case-section alt">
+        <div class="container">
+          <p class="case-kicker">Resultados verificáveis</p>
+          <h2>Backend publicado, monitorável e validado automaticamente.</h2>
+          <div class="results-grid">
+            <article class="result-card">
+              <strong>4 testes</strong>
+              <p>
+                Integrações cobrindo autenticação, partidas e administração.
+              </p>
+            </article>
+            <article class="result-card">
+              <strong>3 migrations</strong>
+              <p>Evolução reproduzível do banco até o esquema atual.</p>
+            </article>
+            <article class="result-card">
+              <strong>HTTP 200</strong>
+              <p>Health check confirmado na API publicada em HTTPS.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="case-cta">
+        <div class="container case-cta-card">
+          <h2>Veja quem consome essa API.</h2>
+          <p>
+            O Dashboard transforma as regras do backend em uma central
+            administrativa.
+          </p>
+          <div class="actions">
+            <a class="button light" href="matchhub-dashboard.html"
+              >Conhecer o dashboard →</a
+            ><a class="button outline" href="../index.html#contato"
+              >Falar com Rodrigo</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="container footer-inner">
+        <a class="brand" href="../index.html"><span>R</span>Rodrigo.dev</a>
+        <p>
+          Desenvolvido por Dev Rodrigo • Todos os direitos reservados •
+          <span data-year></span>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
