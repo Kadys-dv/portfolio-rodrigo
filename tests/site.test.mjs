@@ -135,6 +135,9 @@ test('blocos de código usam animação de digitação acessível', async () => 
   assert.match(html, /<span class="token-keyword">const<\/span>/);
   assert.match(html, /<span class="token-property">ideia<\/span>/);
   assert.match(html, /<span class="token-string">'validada'<\/span>/);
+  assert.match(html, /<span class="token-property">Authorization<\/span>/);
+  assert.match(html, /<span class="token-status">HTTP\/1\.1 200 OK<\/span>/);
+  assert.match(html, /<span class="token-number">10<\/span>/);
   assert.doesNotMatch(html, /<pre><span>const<\/span> produto/);
   assert.match(css, /typing-caret/);
   assert.match(css, /transform-style:preserve-3d/);

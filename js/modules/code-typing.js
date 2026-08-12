@@ -4,15 +4,19 @@ const escapeHtml = value => value
   .replaceAll('>', '&gt;');
 
 function highlightCode(value) {
-  const tokenPattern = /('(?:\\.|[^'])*'|"(?:\\.|[^"])*"|\b(?:const|let|var|return|async|await|new|class|import|from)\b|\b[\p{L}_$][\p{L}\p{N}_$]*(?=\s*:)|\b(?:true|false|null|undefined)\b|\b\d+\b|HTTP\/\d(?:\.\d)?\s+\d{3}\s+[A-Z]+|[{}\[\]():,;])/gu;
+  const tokenPattern = /('(?:\\.|[^'])*'|"(?:\\.|[^"])*"|<[^>\n]+>|\b(?:const|let|var|return|async|await|new|class|import|from|Bearer)\b|\b[\p{L}_$][\p{L}\p{N}_$]*(?=\s*:)|\b(?:true|false|null|undefined)\b|\b\d+\b|HTTP\/\d(?:\.\d)?\s+\d{3}\s+[A-Z]+|[={}\[\]():,;])/gu;
   let output = '';
   let cursor = 0;
   for (const match of value.matchAll(tokenPattern)) {
     output += escapeHtml(value.slice(cursor, match.index));
     const token = match[0];
     let type = 'punctuation';
-    if (/^['"]/.test(token)) type = 'string';
-    else if (/^(?:const|let|var|return|async|await|new|class|import|from)$/.test(token)) type = 'keyword';
+    if (/^['"]/.test(token)) {
+      const remainder = value.slice(match.index + token.length);
+      type = /^\s*:/.test(remainder) ? 'property' : 'string';
+    }
+    else if (/^</.test(token)) type = 'placeholder';
+    else if (/^(?:const|let|var|return|async|await|new|class|import|from|Bearer)$/.test(token)) type = 'keyword';
     else if (/^(?:true|false|null|undefined)$/.test(token)) type = 'literal';
     else if (/^\d+$/.test(token)) type = 'number';
     else if (/^HTTP\//.test(token)) type = 'status';
