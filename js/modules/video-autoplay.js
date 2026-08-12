@@ -6,13 +6,13 @@ export function initVideoAutoplay() {
   if (!video || reducedMotion || !('IntersectionObserver' in window)) return;
 
   const observer = new IntersectionObserver((entries) => {
-    const visible = entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= 0.55);
+    const visible = entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= 0.2);
     if (!visible) return;
 
     video.muted = true;
     video.play().catch(() => {});
     observer.unobserve(video);
-  }, { threshold: [0.55] });
+  }, { threshold: [0.2] });
 
   observer.observe(video);
 }

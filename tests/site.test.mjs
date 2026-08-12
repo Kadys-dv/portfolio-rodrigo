@@ -75,7 +75,7 @@ test('vídeo inicia uma vez ao entrar na área visível', async () => {
   ]);
   assert.match(html, /<video[^>]+controls[^>]+muted[^>]+playsinline[^>]+data-demo-autoplay/);
   assert.match(module, /IntersectionObserver/);
-  assert.match(module, /intersectionRatio >= 0\.55/);
+  assert.match(module, /intersectionRatio >= 0\.2/);
   assert.match(module, /observer\.unobserve\(video\)/);
   assert.match(module, /prefers-reduced-motion/);
 });
@@ -97,7 +97,7 @@ test('observador aciona a reprodução automática do vídeo', async () => {
   const moduleUrl = pathToFileURL(resolve(root, 'js/modules/video-autoplay.js')).href;
   const { initVideoAutoplay } = await import(`${moduleUrl}?test=${Date.now()}`);
   initVideoAutoplay();
-  callback([{ isIntersecting: true, intersectionRatio: 0.55 }]);
+  callback([{ isIntersecting: true, intersectionRatio: 0.2 }]);
 
   assert.equal(video.muted, true);
   assert.equal(playCalls, 1);

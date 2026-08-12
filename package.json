@@ -5,6 +5,10 @@
   "type": "module",
   "scripts": {
     "test": "node --test",
-    "check": "node --check js/main.js && node --test"
+    "check": "node --check js/main.js && node --test",
+    "test:video": "node tests/video-browser-check.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
   }
 }
