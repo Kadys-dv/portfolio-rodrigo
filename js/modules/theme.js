@@ -7,10 +7,13 @@ export function initTheme() {
   if (savedTheme) document.documentElement.dataset.theme = savedTheme;
 
   const button = $('[data-theme-toggle]');
-  const updateButtonState = () => button?.setAttribute(
-    'aria-pressed',
-    String(document.documentElement.dataset.theme === 'dark'),
-  );
+  const label = $('[data-theme-label]');
+  const updateButtonState = () => {
+    const dark = document.documentElement.dataset.theme === 'dark';
+    button?.setAttribute('aria-pressed', String(dark));
+    button?.setAttribute('aria-label', `Tema atual: ${dark ? 'escuro' : 'claro'}. Ativar tema ${dark ? 'claro' : 'escuro'}.`);
+    if (label) label.textContent = dark ? 'Tema escuro' : 'Tema claro';
+  };
 
   updateButtonState();
   button?.addEventListener('click', () => {

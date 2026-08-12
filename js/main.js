@@ -1,6 +1,6 @@
 import { $ } from './utils/dom.js';
 import { initNavigation } from './modules/navigation.js';
-import { initTheme } from './modules/theme.js';
+import { initTheme } from './modules/theme.js?v=20260811-2';
 import { initShowcase } from './modules/showcase.js';
 import { initCertifications } from './modules/certifications.js';
 import { initReveal } from './modules/reveal.js';

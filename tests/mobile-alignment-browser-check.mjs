@@ -26,10 +26,16 @@ for (const viewport of [{ name: 'compact', width: 360, height: 800 }, { name: 'm
         return dot.top - lineTop < 12;
       })(),
       obsoleteContactText: document.body.textContent.includes('O botão abre uma nova mensagem no Gmail'),
+      themeLabelVisible: getComputedStyle(document.querySelector('[data-theme-label]')).display !== 'none',
     };
   });
+  const themeChanged = await page.evaluate(() => {
+    document.querySelector('[data-theme-toggle]').click();
+    return document.querySelector('[data-theme-label]').textContent === 'Tema escuro';
+  });
+  result.themeChanged = themeChanged;
   console.log(JSON.stringify({ viewport: viewport.name, result, errors }));
-  if (result.overflow || result.obsoleteContactText || !result.projectTitle || !result.skill || !result.certificate || !result.footer || !result.availabilityFlex || !result.availabilityStartsTogether || errors.length) process.exitCode = 1;
+  if (result.overflow || result.obsoleteContactText || !result.projectTitle || !result.skill || !result.certificate || !result.footer || !result.availabilityFlex || !result.availabilityStartsTogether || !result.themeLabelVisible || !result.themeChanged || errors.length) process.exitCode = 1;
   await page.close();
 }
 
