@@ -45,3 +45,10 @@ test('contatos profissionais estão presentes', async () => {
   assert.match(html, /github\.com\/Kadys-dv/);
   assert.match(html, /linkedin\.com\/in\/rodrigo-marcelo-dos-santos-2851a4429/);
 });
+
+test('demonstração real do PlayMatch está disponível', async () => {
+  const html = await read('index.html');
+  assert.match(html, /<video[^>]+controls[^>]+playsinline/);
+  assert.match(html, /assets\/playmatch\/playmatch-demo-real\.mp4/);
+  await assert.doesNotReject(access(resolve(root, 'assets/playmatch/playmatch-demo-real.mp4')));
+});
