@@ -68,7 +68,7 @@
 
     <section class="section projects" id="projetos">
       <div class="container">
-        <div class="section-title center reveal"><p class="eyebrow dark">Projeto em destaque</p><h2>PlayMatch</h2><p>Uma plataforma completa para conectar atletas e transformar a organização de jogos.</p></div>
+        <div class="section-title center reveal"><p class="eyebrow dark">Projetos em destaque</p><h2>Produtos reais.</h2><p>Aplicações mobile, web e backend construídas para resolver problemas concretos.</p></div>
         <article class="case-study reveal">
           <div class="case-copy">
             <div class="case-brand"><img src="assets/playmatch/icone.png" alt="Ícone do PlayMatch"><div><small>ESTUDO DE CASO</small><strong>PlayMatch</strong></div></div>
@@ -108,6 +108,39 @@
             </video>
           </div>
         </aside>
+        <article class="api-case reveal" aria-labelledby="matchhub-title">
+          <div class="api-copy">
+            <div class="api-heading"><span class="java-mark" aria-hidden="true">J</span><div><small>BACKEND EM DESTAQUE</small><h3 id="matchhub-title">MatchHub API</h3></div></div>
+            <h4>Regras de partida protegidas no servidor.</h4>
+            <p>API REST desenvolvida como projeto real para autenticar usuários e gerenciar criação, participação, desistência e conclusão de partidas com consistência transacional.</p>
+            <div class="api-status"><span></span> CI validada no GitHub Actions</div>
+            <ul class="api-features">
+              <li>Autenticação JWT e senhas com BCrypt</li>
+              <li>PostgreSQL com migrations Flyway</li>
+              <li>Controle concorrente e transacional de vagas</li>
+              <li>Validação e erros HTTP padronizados</li>
+              <li>Swagger/OpenAPI e Spring Boot Actuator</li>
+              <li>Docker Compose e testes de integração</li>
+            </ul>
+            <div class="tech-list api-tech"><span>Java 21</span><span>Spring Boot 4</span><span>PostgreSQL</span><span>JWT</span><span>Docker</span><span>Flyway</span></div>
+            <a class="api-link" href="https://github.com/Kadys-dv/matchhub-api" target="_blank" rel="noopener">Explorar código e documentação no GitHub <span>↗</span></a>
+          </div>
+          <div class="api-visual" aria-label="Arquitetura resumida da MatchHub API">
+            <div class="code-window">
+              <div class="code-bar"><i></i><i></i><i></i><span>POST /api/v1/matches/{id}/participants/me</span></div>
+              <pre><b>Authorization:</b> Bearer &lt;token&gt;
+
+<span>HTTP/1.1 200 OK</span>
+{
+  "status": "FULL",
+  "confirmed": 10,
+  "capacity": 10
+}</pre>
+            </div>
+            <div class="api-flow"><span>Cliente REST</span><b>→</b><span>Spring Security</span><b>→</b><span>Serviço transacional</span><b>→</b><span>PostgreSQL</span></div>
+            <div class="api-metrics"><div><strong>3</strong><span>testes de integração</span></div><div><strong>1</strong><span>migration versionada</span></div><div><strong>100%</strong><span>pipeline aprovado</span></div></div>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -117,7 +150,7 @@
           <article class="skill reveal"><span>01</span><h3>Mobile</h3><p>Flutter, Dart, Android, interfaces responsivas, câmera, mapas, notificações e publicação.</p></article>
           <article class="skill reveal"><span>02</span><h3>Frontend web</h3><p>HTML semântico, CSS moderno, JavaScript, acessibilidade, responsividade, SEO e desempenho.</p></article>
           <article class="skill reveal"><span>03</span><h3>Java & fundamentos</h3><p>Sintaxe Java, orientação a objetos, estruturas condicionais e de repetição, exceções, debugging e lógica computacional.</p></article>
-          <article class="skill reveal"><span>04</span><h3>Backend & cloud</h3><p>Firebase Auth, Firestore, Storage, Functions, Messaging, App Check e regras de segurança.</p></article>
+          <article class="skill reveal"><span>04</span><h3>Backend & cloud</h3><p>Java, Spring Boot, APIs REST, PostgreSQL, JWT, Docker, Firebase e regras de segurança.</p></article>
           <article class="skill reveal"><span>05</span><h3>IA & qualidade</h3><p>Engenharia assistida por IA, testes automatizados, análise de logs, Crashlytics e documentação.</p></article>
           <article class="skill reveal"><span>06</span><h3>Trabalho colaborativo</h3><p>Git, GitHub, versionamento, contribuição open source, documentação e organização de entregas.</p></article>
         </div>

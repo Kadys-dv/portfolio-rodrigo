@@ -87,6 +87,16 @@ test('currículo informa o nível de inglês', async () => {
   assert.match(html, /Inglês básico/);
 });
 
+test('MatchHub API possui estudo de caso e repositório no portfólio', async () => {
+  const html = await read('index.html');
+  assert.match(html, /id="matchhub-title">MatchHub API/);
+  assert.match(html, /github\.com\/Kadys-dv\/matchhub-api/);
+  for (const technology of ['Java 21', 'Spring Boot 4', 'PostgreSQL', 'JWT', 'Docker', 'Flyway']) {
+    assert.ok(html.includes(technology), `Tecnologia ausente: ${technology}`);
+  }
+  assert.match(html, /CI validada no GitHub Actions/);
+});
+
 test('vídeo inicia uma vez ao entrar na área visível', async () => {
   const [html, module] = await Promise.all([
     read('index.html'),

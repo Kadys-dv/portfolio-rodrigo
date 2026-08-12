@@ -1,6 +1,6 @@
 # Portfólio — Rodrigo Marcelo dos Santos
 
-Portfólio profissional de um desenvolvedor web e mobile, com o PlayMatch como estudo de caso principal, currículo imprimível e certificações verificáveis.
+Portfólio profissional de um desenvolvedor web, mobile e backend, com PlayMatch e MatchHub API como estudos de caso reais, currículo imprimível e certificações verificáveis.
 
 ## Acessar
 
@@ -14,6 +14,7 @@ Portfólio profissional de um desenvolvedor web e mobile, com o PlayMatch como e
 - Design responsivo e acessível
 - Tema claro e escuro
 - Estudo de caso interativo do PlayMatch
+- Estudo de caso backend da MatchHub API em Java e Spring Boot
 - 18 certificados DIO com documentos originais
 - Currículo preparado para impressão ou PDF
 - Foto profissional e carta de apresentação com download em PDF
