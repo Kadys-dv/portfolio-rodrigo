@@ -55,6 +55,7 @@ test('demonstração real do PlayMatch está disponível', async () => {
   const html = await read('index.html');
   assert.match(html, /<video[^>]+controls[^>]+playsinline/);
   assert.match(html, /assets\/playmatch\/playmatch-demo-real\.mp4/);
+  assert.match(html, /Gravado em um Motorola real/);
   await assert.doesNotReject(access(resolve(root, 'assets/playmatch/playmatch-demo-real.mp4')));
 });
 
