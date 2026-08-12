@@ -161,6 +161,10 @@ test('trajetória, status e experiência prática são apresentados com transpar
   assert.match(html, /Esta seção não representa vínculo empregatício/);
   assert.match(html, /PROJETO INDEPENDENTE · MOBILE/);
   assert.match(html, /PROJETO INDEPENDENTE · FULL STACK/);
+  assert.match(html, /class="career-universe reveal"/);
+  assert.match(html, /career-orbit orbit-java/);
+  assert.match(html, /status-pulse/);
+  assert.doesNotMatch(html, /<span data-status-summary>Executando verificação/);
 });
 
 test('vídeo inicia uma vez ao entrar na área visível', async () => {
