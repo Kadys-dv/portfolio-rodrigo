@@ -97,6 +97,17 @@ test('MatchHub API possui estudo de caso e repositório no portfólio', async ()
   assert.match(html, /CI validada no GitHub Actions/);
 });
 
+test('contato abre o Gmail e oferece cópia do endereço', async () => {
+  const [html, module] = await Promise.all([
+    read('index.html'),
+    read('js/modules/contact.js'),
+  ]);
+  assert.match(html, /https:\/\/mail\.google\.com\/mail\/\?view=cm/);
+  assert.match(html, /to=cskadys%40gmail\.com/);
+  assert.match(html, /data-copy-email/);
+  assert.match(module, /navigator\.clipboard\.writeText\(EMAIL\)/);
+});
+
 test('vídeo inicia uma vez ao entrar na área visível', async () => {
   const [html, module] = await Promise.all([
     read('index.html'),
