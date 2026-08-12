@@ -23,6 +23,7 @@ await page.waitForTimeout(3000);
 const state = await video.evaluate(element => ({
   paused: element.paused,
   muted: element.muted,
+  loop: element.loop,
   currentTime: element.currentTime,
   readyState: element.readyState,
   networkState: element.networkState,
@@ -34,4 +35,4 @@ const state = await video.evaluate(element => ({
 console.log(JSON.stringify({ state, errors }, null, 2));
 await browser.close();
 
-if (state.paused || state.currentTime <= 0 || state.error || errors.length) process.exitCode = 1;
+if (state.paused || state.currentTime <= 0 || !state.loop || state.error || errors.length) process.exitCode = 1;
