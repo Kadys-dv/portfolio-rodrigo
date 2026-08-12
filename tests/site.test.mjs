@@ -144,6 +144,25 @@ test('cada projeto possui página individual ligada à seção correspondente', 
   }
 });
 
+test('trajetória, status e experiência prática são apresentados com transparência', async () => {
+  const [html, statusModule] = await Promise.all([
+    read('index.html'),
+    read('js/modules/service-status.js'),
+  ]);
+  assert.match(html, /id="trajetoria"/);
+  for (const milestone of ['Fundamentos em Java', 'PlayMatch', 'MatchHub API', 'MatchHub Dashboard']) {
+    assert.ok(html.includes(milestone), `Marco ausente: ${milestone}`);
+  }
+  assert.match(html, /data-status-service="app"/);
+  assert.match(html, /data-status-service="api"/);
+  assert.match(html, /data-status-service="database"/);
+  assert.match(statusModule, /Promise\.all/);
+  assert.match(statusModule, /Conectado via API/);
+  assert.match(html, /Esta seção não representa vínculo empregatício/);
+  assert.match(html, /PROJETO INDEPENDENTE · MOBILE/);
+  assert.match(html, /PROJETO INDEPENDENTE · FULL STACK/);
+});
+
 test('vídeo inicia uma vez ao entrar na área visível', async () => {
   const [html, module] = await Promise.all([
     read('index.html'),
