@@ -15,7 +15,7 @@ if (location.protocol === 'file:') {
       menuButton.setAttribute('aria-expanded', String(open));
     });
 
-    $('[data-theme]')?.addEventListener('click', () => {
+    $('[data-theme-toggle]')?.addEventListener('click', () => {
       const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
       document.documentElement.dataset.theme = nextTheme;
     });

@@ -52,3 +52,13 @@ test('demonstração real do PlayMatch está disponível', async () => {
   assert.match(html, /assets\/playmatch\/playmatch-demo-real\.mp4/);
   await assert.doesNotReject(access(resolve(root, 'assets/playmatch/playmatch-demo-real.mp4')));
 });
+
+test('alternância de tema fica restrita ao botão dedicado', async () => {
+  const [html, themeModule] = await Promise.all([
+    read('index.html'),
+    read('js/modules/theme.js'),
+  ]);
+  assert.equal((html.match(/data-theme-toggle/g) ?? []).length, 1);
+  assert.match(themeModule, /\$\('\[data-theme-toggle\]'\)/);
+  assert.doesNotMatch(themeModule, /\$\('\[data-theme\]'\)/);
+});
