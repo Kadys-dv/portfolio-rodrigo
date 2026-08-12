@@ -125,7 +125,10 @@ test('blocos de código usam animação de digitação acessível', async () => 
   assert.match(main, /initCodeTyping/);
   assert.match(module, /IntersectionObserver/);
   assert.match(module, /prefers-reduced-motion/);
-  assert.match(module, /pre\.textContent = source\.slice/);
+  assert.match(module, /pre\.innerHTML = highlightCode\(visibleCode\)/);
+  assert.match(module, /highlightCode/);
+  assert.match(module, /token-\$\{type\}/);
+  assert.match(css, /\.token-string/);
   assert.doesNotMatch(module, /createElement\(['"]pre['"]\)/);
   const html = await read('index.html');
   assert.match(html, /<pre data-typing-code=/);
