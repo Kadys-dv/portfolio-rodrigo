@@ -19,11 +19,17 @@ for (const viewport of [{ name: 'compact', width: 360, height: 800 }, { name: 'm
       certificate: centered('.cert-card > div'),
       footer: centered('.footer-inner'),
       availabilityGrid: getComputedStyle(document.querySelector('.availability')).display === 'inline-grid',
+      availabilityStartsTogether: (() => {
+        const container = document.querySelector('.availability');
+        const dot = container.querySelector('span').getBoundingClientRect();
+        const lineTop = container.getBoundingClientRect().top;
+        return dot.top - lineTop < 12;
+      })(),
       obsoleteContactText: document.body.textContent.includes('O botão abre uma nova mensagem no Gmail'),
     };
   });
   console.log(JSON.stringify({ viewport: viewport.name, result, errors }));
-  if (result.overflow || result.obsoleteContactText || !result.projectTitle || !result.skill || !result.certificate || !result.footer || !result.availabilityGrid || errors.length) process.exitCode = 1;
+  if (result.overflow || result.obsoleteContactText || !result.projectTitle || !result.skill || !result.certificate || !result.footer || !result.availabilityGrid || !result.availabilityStartsTogether || errors.length) process.exitCode = 1;
   await page.close();
 }
 
