@@ -32,7 +32,17 @@ const state = await video.evaluate(element => ({
   height: element.getBoundingClientRect().height,
 }));
 
-console.log(JSON.stringify({ state, errors }, null, 2));
+await video.evaluate(element => {
+  if (Number.isFinite(element.duration)) element.currentTime = Math.max(0, element.duration - 0.4);
+});
+await page.waitForTimeout(1800);
+const loopState = await video.evaluate(element => ({
+  paused: element.paused,
+  currentTime: element.currentTime,
+  duration: element.duration,
+}));
+
+console.log(JSON.stringify({ state, loopState, errors }, null, 2));
 await browser.close();
 
-if (state.paused || state.currentTime <= 0 || !state.loop || state.error || errors.length) process.exitCode = 1;
+if (state.paused || state.currentTime <= 0 || !state.loop || state.error || loopState.paused || loopState.currentTime >= 5 || errors.length) process.exitCode = 1;

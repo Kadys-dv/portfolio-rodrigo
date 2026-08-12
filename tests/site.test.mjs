@@ -120,6 +120,8 @@ test('vídeo inicia uma vez ao entrar na área visível', async () => {
   ]);
   assert.match(html, /<video[^>]+controls[^>]+muted[^>]+loop[^>]+playsinline[^>]+data-demo-autoplay/);
   assert.match(module, /IntersectionObserver/);
+  assert.match(module, /video\.loop = true/);
+  assert.match(module, /addEventListener\('ended'/);
   assert.match(module, /intersectionRatio >= 0\.2/);
   assert.match(module, /observer\?\.unobserve\(video\)/);
   assert.match(module, /addEventListener\('canplay', attemptPlay\)/);

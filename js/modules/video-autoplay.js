@@ -4,6 +4,10 @@ export function initVideoAutoplay() {
   const video = $('[data-demo-autoplay]');
   if (!video) return;
 
+  // Reforça a repetição em navegadores móveis que restauram o estado antigo
+  // do elemento de vídeo a partir do cache da página.
+  video.loop = true;
+
   let visible = false;
   let started = false;
   let observer;
@@ -22,6 +26,10 @@ export function initVideoAutoplay() {
   };
 
   video.addEventListener('canplay', attemptPlay);
+  video.addEventListener('ended', () => {
+    video.currentTime = 0;
+    video.play().catch(() => {});
+  });
 
   if (!('IntersectionObserver' in window)) {
     visible = true;
