@@ -62,3 +62,8 @@ test('alternância de tema fica restrita ao botão dedicado', async () => {
   assert.match(themeModule, /\$\('\[data-theme-toggle\]'\)/);
   assert.doesNotMatch(themeModule, /\$\('\[data-theme\]'\)/);
 });
+
+test('assinatura profissional está presente no rodapé', async () => {
+  const html = await read('index.html');
+  assert.match(html, /Desenvolvido por Dev Rodrigo • Todos os direitos reservados/);
+});
