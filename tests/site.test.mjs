@@ -118,6 +118,9 @@ test('blocos de código usam animação de digitação acessível', async () => 
   assert.match(module, /prefers-reduced-motion/);
   assert.match(module, /pre\.textContent = source\.slice/);
   assert.doesNotMatch(module, /createElement\(['"]pre['"]\)/);
+  const html = await read('index.html');
+  assert.match(html, /<pre data-typing-code=/);
+  assert.doesNotMatch(html, /<pre><span>const<\/span> produto/);
   assert.match(css, /typing-caret/);
   assert.match(css, /transform-style:preserve-3d/);
 });
