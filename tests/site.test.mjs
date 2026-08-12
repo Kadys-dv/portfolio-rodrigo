@@ -155,6 +155,8 @@ test('trajetória, status e experiência prática são apresentados com transpar
   }
   assert.match(html, /data-status-service="app"/);
   assert.match(html, /data-status-service="api"/);
+  assert.match(html, /href="projetos\/matchhub-api\.html" data-status-service="api"/);
+  assert.doesNotMatch(html, /href="https:\/\/matchhub-api-43bv\.onrender\.com\/actuator\/health"[^>]*data-status-service="api"/);
   assert.match(html, /data-status-service="database"/);
   assert.match(statusModule, /Promise\.all/);
   assert.match(statusModule, /Conectado via API/);
