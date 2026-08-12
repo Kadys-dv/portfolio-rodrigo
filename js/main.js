@@ -4,6 +4,7 @@ import { initTheme } from './modules/theme.js';
 import { initShowcase } from './modules/showcase.js';
 import { initCertifications } from './modules/certifications.js';
 import { initReveal } from './modules/reveal.js';
+import { initVideoAutoplay } from './modules/video-autoplay.js';
 
 document.documentElement.classList.add('js');
 
@@ -12,6 +13,7 @@ initTheme();
 initShowcase();
 initCertifications();
 initReveal();
+initVideoAutoplay();
 
 const year = $('[data-year]');
 if (year) year.textContent = new Date().getFullYear();

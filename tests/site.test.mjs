@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile, access } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const read = path => readFile(resolve(root, path), 'utf8');
@@ -66,4 +66,40 @@ test('alternância de tema fica restrita ao botão dedicado', async () => {
 test('assinatura profissional está presente no rodapé', async () => {
   const html = await read('index.html');
   assert.match(html, /Desenvolvido por Dev Rodrigo • Todos os direitos reservados/);
+});
+
+test('vídeo inicia uma vez ao entrar na área visível', async () => {
+  const [html, module] = await Promise.all([
+    read('index.html'),
+    read('js/modules/video-autoplay.js'),
+  ]);
+  assert.match(html, /<video[^>]+controls[^>]+muted[^>]+playsinline[^>]+data-demo-autoplay/);
+  assert.match(module, /IntersectionObserver/);
+  assert.match(module, /intersectionRatio >= 0\.55/);
+  assert.match(module, /observer\.unobserve\(video\)/);
+  assert.match(module, /prefers-reduced-motion/);
+});
+
+test('observador aciona a reprodução automática do vídeo', async () => {
+  let callback;
+  let playCalls = 0;
+  let unobserveCalls = 0;
+  const video = { muted: false, play: () => { playCalls += 1; return Promise.resolve(); } };
+  globalThis.document = { querySelector: selector => selector === '[data-demo-autoplay]' ? video : null };
+  globalThis.matchMedia = () => ({ matches: false });
+  globalThis.window = { IntersectionObserver: true };
+  globalThis.IntersectionObserver = class {
+    constructor(handler) { callback = handler; }
+    observe() {}
+    unobserve() { unobserveCalls += 1; }
+  };
+
+  const moduleUrl = pathToFileURL(resolve(root, 'js/modules/video-autoplay.js')).href;
+  const { initVideoAutoplay } = await import(`${moduleUrl}?test=${Date.now()}`);
+  initVideoAutoplay();
+  callback([{ isIntersecting: true, intersectionRatio: 0.55 }]);
+
+  assert.equal(video.muted, true);
+  assert.equal(playCalls, 1);
+  assert.equal(unobserveCalls, 1);
 });
