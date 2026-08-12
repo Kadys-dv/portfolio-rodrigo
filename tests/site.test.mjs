@@ -82,6 +82,11 @@ test('currículo informa a escolaridade concluída', async () => {
   assert.match(html, /Formação concluída/);
 });
 
+test('currículo informa o nível de inglês', async () => {
+  const html = await read('curriculo.html');
+  assert.match(html, /Inglês básico/);
+});
+
 test('vídeo inicia uma vez ao entrar na área visível', async () => {
   const [html, module] = await Promise.all([
     read('index.html'),
