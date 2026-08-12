@@ -21,6 +21,7 @@ const popup = await popupPromise;
 await popup.waitForLoadState('domcontentloaded').catch(() => {});
 
 await page.locator('[data-copy-email]').click();
+await page.locator('[data-copy-feedback]').filter({ hasText: 'E-mail copiado' }).waitFor();
 const feedback = await page.locator('[data-copy-feedback]').textContent();
 const copiedEmail = await page.evaluate(() => navigator.clipboard.readText());
 
