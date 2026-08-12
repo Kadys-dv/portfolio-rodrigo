@@ -125,6 +125,25 @@ test('MatchHub Dashboard possui estudo de caso full stack', async () => {
   await assert.doesNotReject(access(resolve(root, 'assets/matchhub/dashboard.png')));
 });
 
+test('cada projeto possui página individual ligada à seção correspondente', async () => {
+  const index = await read('index.html');
+  const projects = [
+    ['projetos/playmatch.html', 'PlayMatch'],
+    ['projetos/matchhub-api.html', 'MatchHub API'],
+    ['projetos/matchhub-dashboard.html', 'MatchHub Dashboard'],
+  ];
+
+  for (const [path, title] of projects) {
+    assert.ok(index.includes(`href="${path}"`), `Link ausente: ${path}`);
+    const page = await read(path);
+    assert.ok(page.includes(title), `Título ausente: ${title}`);
+    for (const section of ['O problema', 'Decisões técnicas', 'Arquitetura', 'Testes', 'Resultados']) {
+      assert.ok(page.includes(section), `Seção ${section} ausente em ${path}`);
+    }
+    assert.match(page, /Desenvolvido por Dev Rodrigo/);
+  }
+});
+
 test('vídeo inicia uma vez ao entrar na área visível', async () => {
   const [html, module] = await Promise.all([
     read('index.html'),
