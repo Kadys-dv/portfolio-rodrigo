@@ -76,6 +76,12 @@ test('foto, currículo e carta profissionais estão disponíveis', async () => {
   }
 });
 
+test('currículo informa a escolaridade concluída', async () => {
+  const html = await read('curriculo.html');
+  assert.match(html, /Ensino Médio Completo/);
+  assert.match(html, /Formação concluída/);
+});
+
 test('vídeo inicia uma vez ao entrar na área visível', async () => {
   const [html, module] = await Promise.all([
     read('index.html'),
