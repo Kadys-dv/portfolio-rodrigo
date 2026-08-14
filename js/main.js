@@ -19,5 +19,16 @@ initVideoAutoplay();
 initServiceStatus();
 initCodeTyping();
 
+const ritmoraxShowcase = document.querySelector('[data-ritmorax-showcase]');
+if (ritmoraxShowcase) {
+  const screens = [...ritmoraxShowcase.querySelectorAll('.ritmorax-screen')];
+  let current = 0;
+  setInterval(() => {
+    screens[current].classList.remove('active');
+    current = (current + 1) % screens.length;
+    screens[current].classList.add('active');
+  }, 3200);
+}
+
 const year = $('[data-year]');
 if (year) year.textContent = new Date().getFullYear();
