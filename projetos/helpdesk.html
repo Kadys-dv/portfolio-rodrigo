@@ -20,6 +20,24 @@
     <title>Helpdesk — Estudo de caso | Rodrigo.dev</title>
     <link rel="icon" href="../favicon.svg" />
     <link rel="stylesheet" href="../styles/case-study.css?v=20260813-2" />
+    <style>
+      .helpdesk-preview img {
+        width: min(270px, 86%) !important;
+        aspect-ratio: 4 / 5 !important;
+        object-fit: contain !important;
+        object-position: center !important;
+        background: #fff;
+        padding: 16px;
+        border-radius: 28px;
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+      }
+      @media (max-width: 620px) {
+        .helpdesk-preview img {
+          width: min(230px, 88%) !important;
+          padding: 12px;
+        }
+      }
+    </style>
     <script type="module" src="../js/main.js?v=20260811-4"></script>
   </head>
   <body class="project-page">
@@ -56,7 +74,7 @@
                 <a class="button secondary" href="#arquitetura">Ver estrutura</a>
               </div>
             </div>
-            <figure class="case-cover phone-cover">
+            <figure class="case-cover phone-cover helpdesk-preview">
               <img src="../assets/social-card.png" alt="Prévia visual do projeto Helpdesk" />
             </figure>
           </div>
