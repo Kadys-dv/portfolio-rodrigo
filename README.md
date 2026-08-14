@@ -1,6 +1,6 @@
 # Portfólio — Rodrigo Marcelo dos Santos
 
-Portfólio profissional de desenvolvimento web, mobile e backend, com PlayMatch, MatchHub API e MatchHub Dashboard apresentados como produtos reais.
+Portfólio profissional de desenvolvimento web, mobile e backend, com PlayMatch, MatchHub, Helpdesk e RitmoraX apresentados como produtos reais.
 
 ## Acessar
 
@@ -14,6 +14,7 @@ Portfólio profissional de desenvolvimento web, mobile e backend, com PlayMatch,
 - Estudo de caso mobile do PlayMatch com vídeo gravado em dispositivo real
 - Backend MatchHub API em Java, Spring Boot, PostgreSQL e Docker
 - Dashboard administrativo em Next.js, React e TypeScript
+- RitmoraX: aplicativo Flutter de hábitos, metas, relatórios e integração Health Connect
 - Design responsivo, acessível e com temas claro e escuro
 - Certificados verificáveis, currículo e carta de apresentação
 - SEO, Open Graph, dados estruturados, sitemap e testes automatizados
