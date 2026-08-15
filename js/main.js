@@ -32,6 +32,7 @@ if (ritmoraxShowcase) {
 
 const dashboardHeroImage = document.querySelector('.project-page .case-hero .case-cover img[src*="matchhub/dashboard.png"]');
 if (dashboardHeroImage) {
+  document.body.classList.add('matchhub-dashboard-study');
   dashboardHeroImage.src = '../assets/matchhub/dashboard-login.png';
   dashboardHeroImage.alt = 'Tela de login segura do MatchHub Dashboard';
   dashboardHeroImage.classList.add('study-dashboard-screen');
