@@ -30,11 +30,15 @@ if (ritmoraxShowcase) {
   }, 3200);
 }
 
-const dashboardStudyImage = document.querySelector('.project-page .case-section .case-cover img[src*="matchhub/dashboard.png"]');
+const dashboardStudyImage = document.querySelector('.project-page .case-hero .case-cover img[src*="matchhub/dashboard.png"]');
 if (dashboardStudyImage) {
   const screens = [
-    { src: '../assets/matchhub/dashboard.png', alt: 'Indicadores e partidas no MatchHub Dashboard' },
+    { src: '../assets/matchhub/dashboard.png', alt: 'Visão geral do MatchHub Dashboard' },
     { src: '../assets/matchhub/dashboard-login.png', alt: 'Tela de login segura do MatchHub Dashboard' },
+    { src: '../assets/matchhub/partidas.png', alt: 'Gestão de partidas no MatchHub Dashboard' },
+    { src: '../assets/matchhub/atletas.png', alt: 'Gestão de atletas no MatchHub Dashboard' },
+    { src: '../assets/matchhub/moderacao.png', alt: 'Área de moderação no MatchHub Dashboard' },
+    { src: '../assets/matchhub/relatorios.png', alt: 'Relatórios operacionais no MatchHub Dashboard' },
   ];
   let current = 0;
   dashboardStudyImage.classList.add('study-dashboard-screen');
