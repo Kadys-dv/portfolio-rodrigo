@@ -3,3 +3,8 @@
   .phone{width:clamp(255px,22vw,340px)}
   .ritmorax-phone,.case-cover.phone-cover .ritmorax-phone{width:clamp(250px,20vw,330px);height:auto;aspect-ratio:25/48}
 }
+@media(min-width:1400px){
+  .certifications .container{width:min(1320px,calc(100% - 80px))}
+  .cert-grid{gap:20px}
+  .cert-card>div{padding:24px}
+}
