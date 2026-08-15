@@ -30,5 +30,16 @@ if (ritmoraxShowcase) {
   }, 3200);
 }
 
+const dashboardShowcase = document.querySelector('[data-dashboard-showcase]');
+if (dashboardShowcase) {
+  const screens = [...dashboardShowcase.querySelectorAll('.dashboard-screen')];
+  let current = 0;
+  setInterval(() => {
+    screens[current].classList.remove('active');
+    current = (current + 1) % screens.length;
+    screens[current].classList.add('active');
+  }, 3600);
+}
+
 const year = $('[data-year]');
 if (year) year.textContent = new Date().getFullYear();
