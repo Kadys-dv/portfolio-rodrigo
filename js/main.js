@@ -30,8 +30,8 @@ if (ritmoraxShowcase) {
   }, 3200);
 }
 
-const dashboardStudyImage = document.querySelector('.project-page .case-hero .case-cover img[src*="matchhub/dashboard.png"]');
-if (dashboardStudyImage) {
+const dashboardStudyImages = [...document.querySelectorAll('.project-page .case-cover img[src*="matchhub/dashboard.png"]')];
+if (dashboardStudyImages.length) {
   const screens = [
     { src: '../assets/matchhub/dashboard.png', alt: 'Visão geral do MatchHub Dashboard' },
     { src: '../assets/matchhub/dashboard-login.png', alt: 'Tela de login segura do MatchHub Dashboard' },
@@ -40,17 +40,21 @@ if (dashboardStudyImage) {
     { src: '../assets/matchhub/moderacao.png', alt: 'Área de moderação no MatchHub Dashboard' },
     { src: '../assets/matchhub/relatorios.png', alt: 'Relatórios operacionais no MatchHub Dashboard' },
   ];
-  let current = 0;
-  dashboardStudyImage.classList.add('study-dashboard-screen');
-  setInterval(() => {
-    dashboardStudyImage.classList.add('is-switching');
-    window.setTimeout(() => {
-      current = (current + 1) % screens.length;
-      dashboardStudyImage.src = screens[current].src;
-      dashboardStudyImage.alt = screens[current].alt;
-      dashboardStudyImage.classList.remove('is-switching');
-    }, 180);
-  }, 3600);
+  dashboardStudyImages.forEach((image, index) => {
+    let current = index === 0 ? 0 : 3;
+    image.src = screens[current].src;
+    image.alt = screens[current].alt;
+    image.classList.add('study-dashboard-screen');
+    setInterval(() => {
+      image.classList.add('is-switching');
+      window.setTimeout(() => {
+        current = (current + 1) % screens.length;
+        image.src = screens[current].src;
+        image.alt = screens[current].alt;
+        image.classList.remove('is-switching');
+      }, 180);
+    }, 3600);
+  });
 }
 
 const year = $('[data-year]');
