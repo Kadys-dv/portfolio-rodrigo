@@ -39,7 +39,6 @@ export function initServiceStatus() {
     ]);
     renderStatus(panel, 'app', appOnline);
     renderStatus(panel, 'api', apiOnline);
-    renderStatus(panel, 'database', apiOnline, apiOnline ? 'Conectado via API' : 'Não confirmado');
     const onlineCount = Number(appOnline) + Number(apiOnline);
     if (summary) summary.textContent = `${onlineCount}/2 serviços públicos responderam · atualizado agora`;
     refresh?.removeAttribute('disabled');

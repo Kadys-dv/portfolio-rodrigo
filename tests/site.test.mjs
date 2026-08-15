@@ -37,11 +37,13 @@ test('folha de estilos possui versão para evitar cache antigo', async () => {
   assert.match(html, /styles\/main\.css\?v=\d{8}-\d+/);
 });
 
-test('certificados têm prévia e PDF', async () => {
-  const html = await read('index.html');
-  assert.equal((html.match(/class="cert-card reveal"/g) ?? []).length, 18);
-  assert.equal((html.match(/certificados\/[A-Z0-9]+\.pdf/g) ?? []).length, 18);
-  assert.equal((html.match(/assets\/certificados\/[A-Z0-9]+\.gif/g) ?? []).length, 18);
+test('três certificados principais são priorizados na página inicial', async () => {
+  const [html, css] = await Promise.all([read('index.html'), read('styles/main.css')]);
+  for (const certificate of ['Dominando a Linguagem de Programação Java', 'Princípios de Desenvolvimento de Software Colaborativo', 'Aprendendo a Sintaxe Java']) {
+    assert.ok(html.includes(certificate), `Certificado ausente: ${certificate}`);
+  }
+  assert.match(css, /#certificacoes \.cert-card:nth-child\(n\+4\)\{display:none\}/);
+  assert.doesNotMatch(html, /data-cert-more/);
 });
 
 test('contatos profissionais estão presentes', async () => {
@@ -74,10 +76,10 @@ test('assinatura profissional está presente no rodapé', async () => {
   assert.match(html, /Desenvolvido por Dev Rodrigo • Todos os direitos reservados/);
 });
 
-test('foto, currículo e carta profissionais estão disponíveis', async () => {
+test('currículo ATS e carta profissionais estão disponíveis', async () => {
   const pages = await Promise.all(['index.html', 'curriculo.html', 'carta-apresentacao.html'].map(read));
-  assert.ok(pages.every(page => page.includes('assets/profile/rodrigo.jpg')));
-  for (const path of ['assets/profile/rodrigo.jpg', 'assets/documentos/curriculo-rodrigo.pdf', 'assets/documentos/carta-apresentacao-rodrigo.pdf']) {
+  assert.ok(pages.every(page => page.includes('Rodrigo Marcelo dos Santos')));
+  for (const path of ['assets/documentos/curriculo-rodrigo-ats-v6.pdf', 'assets/documentos/carta-apresentacao-rodrigo.pdf']) {
     await assert.doesNotReject(access(resolve(root, path)), `Arquivo ausente: ${path}`);
   }
 });
@@ -93,13 +95,13 @@ test('currículo informa o nível de inglês', async () => {
   assert.match(html, /Inglês básico/);
 });
 
-test('currículo apresenta competências full stack desenvolvidas nos projetos', async () => {
+test('currículo ATS apresenta competências técnicas desenvolvidas nos projetos', async () => {
   const html = await read('curriculo.html');
-  for (const skill of ['Spring Boot', 'PostgreSQL', 'Docker', 'Next.js', 'TypeScript', 'Arquitetura BFF', 'CI/CD', 'Análise de logs']) {
+  for (const skill of ['Spring Boot', 'PostgreSQL', 'Docker', 'Next.js', 'TypeScript', 'análise de logs', 'Mais de 20 telas funcionais', 'Nove testes automatizados']) {
     assert.ok(html.includes(skill), `Competência ausente no currículo: ${skill}`);
   }
-  assert.match(html, /Plataforma MatchHub — Desenvolvimento Full Stack/);
-  assert.match(html, /Projeto independente publicado/);
+  assert.match(html, /Desenvolvedor de Software Júnior/);
+  assert.match(html, /Praia Grande - SP/);
 });
 
 test('MatchHub API possui estudo de caso e repositório no portfólio', async () => {
@@ -143,10 +145,10 @@ test('blocos de código usam animação de digitação acessível', async () => 
   assert.match(css, /transform-style:preserve-3d/);
 });
 
-test('contato abre o Gmail e destaca as redes profissionais', async () => {
-  const html = await read('index.html');
-  assert.match(html, /https:\/\/mail\.google\.com\/mail\/\?view=cm/);
-  assert.match(html, /to=cskadys%40gmail\.com/);
+test('contato usa mailto e destaca as redes profissionais', async () => {
+  const [html, contactModule] = await Promise.all([read('index.html'), read('js/modules/contact.js')]);
+  assert.match(contactModule, /mailto:cskadys@gmail\.com\?subject=Contato%20pelo%20portf%C3%B3lio/);
+  assert.match(contactModule, /emailLink\.removeAttribute\('target'\)/);
   assert.doesNotMatch(html, /data-copy-email|Copiar e-mail/);
   assert.match(html, /class="button social-button linkedin-button"/);
   assert.match(html, /class="button social-button github-button"/);
@@ -197,10 +199,10 @@ test('trajetória, status e experiência prática são apresentados com transpar
   assert.match(html, /data-status-service="api"/);
   assert.match(html, /href="projetos\/matchhub-api\.html" data-status-service="api"/);
   assert.doesNotMatch(html, /href="https:\/\/matchhub-api-43bv\.onrender\.com\/actuator\/health"[^>]*data-status-service="api"/);
-  assert.match(html, /data-status-service="database"/);
+  assert.doesNotMatch(html, /console\.neon\.tech/);
+  assert.doesNotMatch(html, /data-status-service="database"/);
   assert.match(statusModule, /Promise\.all/);
-  assert.match(statusModule, /Conectado via API/);
-  assert.match(html, /Esta seção não representa vínculo empregatício/);
+  assert.doesNotMatch(html, /Esta seção não representa vínculo empregatício/);
   assert.match(html, /PROJETO INDEPENDENTE · MOBILE/);
   assert.match(html, /PROJETO INDEPENDENTE · FULL STACK/);
   assert.match(html, /class="career-universe reveal"/);
