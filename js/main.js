@@ -30,7 +30,14 @@ if (ritmoraxShowcase) {
   }, 3200);
 }
 
-const dashboardStudyImages = [...document.querySelectorAll('.project-page .case-cover img[src*="matchhub/dashboard.png"]')];
+const dashboardHeroImage = document.querySelector('.project-page .case-hero .case-cover img[src*="matchhub/dashboard.png"]');
+if (dashboardHeroImage) {
+  dashboardHeroImage.src = '../assets/matchhub/dashboard-login.png';
+  dashboardHeroImage.alt = 'Tela de login segura do MatchHub Dashboard';
+  dashboardHeroImage.classList.add('study-dashboard-screen');
+}
+
+const dashboardStudyImages = [...document.querySelectorAll('.project-page .case-section .case-cover img[src*="matchhub/dashboard.png"]')];
 if (dashboardStudyImages.length) {
   const screens = [
     { src: '../assets/matchhub/dashboard.png', alt: 'Visão geral do MatchHub Dashboard' },
@@ -40,8 +47,8 @@ if (dashboardStudyImages.length) {
     { src: '../assets/matchhub/moderacao.png', alt: 'Área de moderação no MatchHub Dashboard' },
     { src: '../assets/matchhub/relatorios.png', alt: 'Relatórios operacionais no MatchHub Dashboard' },
   ];
-  dashboardStudyImages.forEach((image, index) => {
-    let current = index === 0 ? 0 : 3;
+  dashboardStudyImages.forEach((image) => {
+    let current = 0;
     image.src = screens[current].src;
     image.alt = screens[current].alt;
     image.classList.add('study-dashboard-screen');
