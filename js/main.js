@@ -30,14 +30,22 @@ if (ritmoraxShowcase) {
   }, 3200);
 }
 
-const dashboardShowcase = document.querySelector('[data-dashboard-showcase]');
-if (dashboardShowcase) {
-  const screens = [...dashboardShowcase.querySelectorAll('.dashboard-screen')];
+const dashboardStudyImage = document.querySelector('.project-page .case-section .case-cover img[src*="matchhub/dashboard.png"]');
+if (dashboardStudyImage) {
+  const screens = [
+    { src: '../assets/matchhub/dashboard.png', alt: 'Indicadores e partidas no MatchHub Dashboard' },
+    { src: '../assets/matchhub/dashboard-login.png', alt: 'Tela de login segura do MatchHub Dashboard' },
+  ];
   let current = 0;
+  dashboardStudyImage.classList.add('study-dashboard-screen');
   setInterval(() => {
-    screens[current].classList.remove('active');
-    current = (current + 1) % screens.length;
-    screens[current].classList.add('active');
+    dashboardStudyImage.classList.add('is-switching');
+    window.setTimeout(() => {
+      current = (current + 1) % screens.length;
+      dashboardStudyImage.src = screens[current].src;
+      dashboardStudyImage.alt = screens[current].alt;
+      dashboardStudyImage.classList.remove('is-switching');
+    }, 180);
   }, 3600);
 }
 
