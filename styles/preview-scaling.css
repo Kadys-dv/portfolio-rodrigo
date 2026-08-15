@@ -9,4 +9,5 @@
   .certifications .container{width:min(1320px,calc(100% - 80px))}
   .cert-grid{gap:20px}
   .cert-card>div{padding:24px}
+  .demo-panel{width:min(1320px,calc(100vw - 80px));margin-left:calc((1180px - min(1320px,calc(100vw - 80px)))/2)}
 }
