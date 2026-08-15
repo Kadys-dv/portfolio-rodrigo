@@ -2,6 +2,8 @@
 @media(min-width:901px){
   .phone{width:clamp(255px,22vw,340px)}
   .ritmorax-phone,.case-cover.phone-cover .ritmorax-phone{width:clamp(250px,20vw,330px);height:auto;aspect-ratio:25/48}
+  .demo-panel{grid-template-columns:minmax(0,1fr) minmax(280px,340px)}
+  .demo-player{width:clamp(280px,20vw,340px)}
 }
 @media(min-width:1400px){
   .certifications .container{width:min(1320px,calc(100% - 80px))}
