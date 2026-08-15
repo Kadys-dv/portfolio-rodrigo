@@ -45,3 +45,4 @@ html,body{max-width:100%;overflow-x:hidden}.hero-grid>*{min-width:0}.code-card p
 @media(min-width:901px){.case-cover.phone-cover .ritmorax-phone{width:clamp(250px,20vw,330px);height:auto;aspect-ratio:25/48}}
 @media(min-width:1400px){.container{width:min(1320px,calc(100% - 80px))}.case-cover.phone-cover>img{width:clamp(245px,20vw,330px)}}
 @media(min-width:901px){.ritmorax-gallery img{width:clamp(250px,20vw,330px);height:auto;aspect-ratio:25/48}}
+@media(min-width:901px){.feature-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.feature-grid article{padding:26px;border:1px solid var(--line);border-radius:24px;background:var(--surface);box-shadow:0 18px 42px rgba(6,34,25,.08)}}
