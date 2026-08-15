@@ -44,3 +44,4 @@ html,body{max-width:100%;overflow-x:hidden}.hero-grid>*{min-width:0}.code-card p
 @media(prefers-reduced-motion:reduce){.code-window{transition:none}.code-window:hover{transform:none}}
 @media(min-width:901px){.case-cover.phone-cover .ritmorax-phone{width:clamp(250px,20vw,330px);height:auto;aspect-ratio:25/48}}
 @media(min-width:1400px){.container{width:min(1320px,calc(100% - 80px))}.case-cover.phone-cover>img{width:clamp(245px,20vw,330px)}}
+@media(min-width:901px){.ritmorax-gallery img{width:clamp(250px,20vw,330px);height:auto;aspect-ratio:25/48}}
