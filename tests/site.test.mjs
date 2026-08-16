@@ -1,11 +1,11 @@
-import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile, access } from 'node:fs/promises';
-import { resolve, dirname } from 'node:path';
+import { access, readFile } from 'node:fs/promises';
+import { dirname, resolve } from 'node:path';
+import test from 'node:test';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const read = path => readFile(resolve(root, path), 'utf8');
+const read = (path) => readFile(resolve(root, path), 'utf8');
 
 test('páginas não possuem marcadores pendentes', async () => {
   const pages = await Promise.all(['index.html', 'curriculo.html'].map(read));
@@ -16,8 +16,8 @@ test('arquivos locais referenciados existem', async () => {
   for (const pageName of ['index.html', 'curriculo.html']) {
     const html = await read(pageName);
     const references = [...html.matchAll(/(?:href|src)="([^"]+)"/g)]
-      .map(match => match[1].split('#')[0].split('?')[0])
-      .filter(value => value && !/^(?:https?:|mailto:|#)/.test(value));
+      .map((match) => match[1].split('#')[0].split('?')[0])
+      .filter((value) => value && !/^(?:https?:|mailto:|#)/.test(value));
     for (const reference of references) {
       await assert.doesNotReject(access(resolve(root, reference)), `${pageName}: ${reference}`);
     }
@@ -26,7 +26,13 @@ test('arquivos locais referenciados existem', async () => {
 
 test('SEO essencial está configurado', async () => {
   const html = await read('index.html');
-  for (const required of ['rel="canonical"', 'property="og:image"', 'name="twitter:card"', 'application/ld+json', 'name="robots"']) {
+  for (const required of [
+    'rel="canonical"',
+    'property="og:image"',
+    'name="twitter:card"',
+    'application/ld+json',
+    'name="robots"',
+  ]) {
     assert.ok(html.includes(required), `Ausente: ${required}`);
   }
   assert.equal((html.match(/<h1/g) ?? []).length, 1);
@@ -39,7 +45,11 @@ test('folha de estilos possui versão para evitar cache antigo', async () => {
 
 test('três certificados principais são priorizados na página inicial', async () => {
   const [html, css] = await Promise.all([read('index.html'), read('styles/main.css')]);
-  for (const certificate of ['Dominando a Linguagem de Programação Java', 'Princípios de Desenvolvimento de Software Colaborativo', 'Aprendendo a Sintaxe Java']) {
+  for (const certificate of [
+    'Dominando a Linguagem de Programação Java',
+    'Princípios de Desenvolvimento de Software Colaborativo',
+    'Aprendendo a Sintaxe Java',
+  ]) {
     assert.ok(html.includes(certificate), `Certificado ausente: ${certificate}`);
   }
   assert.match(css, /#certificacoes \.cert-card:nth-child\(n\+4\)\{display:none\}/);
@@ -62,10 +72,7 @@ test('demonstração real do PlayMatch está disponível', async () => {
 });
 
 test('alternância de tema fica restrita ao botão dedicado', async () => {
-  const [html, themeModule] = await Promise.all([
-    read('index.html'),
-    read('js/modules/theme.js'),
-  ]);
+  const [html, themeModule] = await Promise.all([read('index.html'), read('js/modules/theme.js')]);
   assert.equal((html.match(/data-theme-toggle/g) ?? []).length, 1);
   assert.match(themeModule, /\$\('\[data-theme-toggle\]'\)/);
   assert.doesNotMatch(themeModule, /\$\('\[data-theme\]'\)/);
@@ -77,9 +84,14 @@ test('assinatura profissional está presente no rodapé', async () => {
 });
 
 test('currículo ATS e carta profissionais estão disponíveis', async () => {
-  const pages = await Promise.all(['index.html', 'curriculo.html', 'carta-apresentacao.html'].map(read));
-  assert.ok(pages.every(page => page.includes('Rodrigo Marcelo dos Santos')));
-  for (const path of ['assets/documentos/curriculo-rodrigo-ats-v6.pdf', 'assets/documentos/carta-apresentacao-rodrigo.pdf']) {
+  const pages = await Promise.all(
+    ['index.html', 'curriculo.html', 'carta-apresentacao.html'].map(read),
+  );
+  assert.ok(pages.every((page) => page.includes('Rodrigo Marcelo dos Santos')));
+  for (const path of [
+    'assets/documentos/curriculo-rodrigo-ats-v6.pdf',
+    'assets/documentos/carta-apresentacao-rodrigo.pdf',
+  ]) {
     await assert.doesNotReject(access(resolve(root, path)), `Arquivo ausente: ${path}`);
   }
 });
@@ -97,7 +109,16 @@ test('currículo informa o nível de inglês', async () => {
 
 test('currículo ATS apresenta competências técnicas desenvolvidas nos projetos', async () => {
   const html = await read('curriculo.html');
-  for (const skill of ['Spring Boot', 'PostgreSQL', 'Docker', 'Next.js', 'TypeScript', 'análise de logs', 'Mais de 20 telas funcionais', 'Nove testes automatizados']) {
+  for (const skill of [
+    'Spring Boot',
+    'PostgreSQL',
+    'Docker',
+    'Next.js',
+    'TypeScript',
+    'análise de logs',
+    'Mais de 20 telas funcionais',
+    'Nove testes automatizados',
+  ]) {
     assert.ok(html.includes(skill), `Competência ausente no currículo: ${skill}`);
   }
   assert.match(html, /Desenvolvedor de Software Júnior/);
@@ -115,7 +136,10 @@ test('MatchHub API possui estudo de caso e repositório no portfólio', async ()
   const caseStudy = await read('projetos/matchhub-api.html');
   assert.match(caseStudy, /href="#arquitetura"/);
   assert.doesNotMatch(caseStudy, />Saúde da API</);
-  assert.doesNotMatch(caseStudy, /href="https:\/\/matchhub-api-43bv\.onrender\.com\/actuator\/health"/);
+  assert.doesNotMatch(
+    caseStudy,
+    /href="https:\/\/matchhub-api-43bv\.onrender\.com\/actuator\/health"/,
+  );
 });
 
 test('blocos de código usam animação de digitação acessível', async () => {
@@ -167,7 +191,10 @@ test('sistema de movimento prioriza sequências, métricas e acessibilidade', as
 });
 
 test('contato usa mailto e destaca as redes profissionais', async () => {
-  const [html, contactModule] = await Promise.all([read('index.html'), read('js/modules/contact.js')]);
+  const [html, contactModule] = await Promise.all([
+    read('index.html'),
+    read('js/modules/contact.js'),
+  ]);
   assert.match(contactModule, /mailto:cskadys@gmail\.com\?subject=Contato%20pelo%20portf%C3%B3lio/);
   assert.match(contactModule, /emailLink\.removeAttribute\('target'\)/);
   assert.doesNotMatch(html, /data-copy-email|Copiar e-mail/);
@@ -200,7 +227,13 @@ test('cada projeto possui página individual ligada à seção correspondente', 
     assert.ok(index.includes(`href="${path}"`), `Link ausente: ${path}`);
     const page = await read(path);
     assert.ok(page.includes(title), `Título ausente: ${title}`);
-    for (const section of ['O problema', 'Decisões técnicas', 'Arquitetura', 'Testes', 'Resultados']) {
+    for (const section of [
+      'O problema',
+      'Decisões técnicas',
+      'Arquitetura',
+      'Testes',
+      'Resultados',
+    ]) {
       assert.ok(page.includes(section), `Seção ${section} ausente em ${path}`);
     }
     assert.match(page, /Desenvolvido por Dev Rodrigo/);
@@ -213,13 +246,21 @@ test('trajetória, status e experiência prática são apresentados com transpar
     read('js/modules/service-status.js'),
   ]);
   assert.match(html, /id="trajetoria"/);
-  for (const milestone of ['Fundamentos em Java', 'PlayMatch', 'MatchHub API', 'MatchHub Dashboard']) {
+  for (const milestone of [
+    'Fundamentos em Java',
+    'PlayMatch',
+    'MatchHub API',
+    'MatchHub Dashboard',
+  ]) {
     assert.ok(html.includes(milestone), `Marco ausente: ${milestone}`);
   }
   assert.match(html, /data-status-service="app"/);
   assert.match(html, /data-status-service="api"/);
   assert.match(html, /href="projetos\/matchhub-api\.html" data-status-service="api"/);
-  assert.doesNotMatch(html, /href="https:\/\/matchhub-api-43bv\.onrender\.com\/actuator\/health"[^>]*data-status-service="api"/);
+  assert.doesNotMatch(
+    html,
+    /href="https:\/\/matchhub-api-43bv\.onrender\.com\/actuator\/health"[^>]*data-status-service="api"/,
+  );
   assert.doesNotMatch(html, /console\.neon\.tech/);
   assert.doesNotMatch(html, /data-status-service="database"/);
   assert.match(statusModule, /Promise\.all/);
@@ -237,7 +278,10 @@ test('vídeo inicia uma vez ao entrar na área visível', async () => {
     read('index.html'),
     read('js/modules/video-autoplay.js'),
   ]);
-  assert.match(html, /<video[^>]+controls[^>]+muted[^>]+loop[^>]+playsinline[^>]+data-demo-autoplay/);
+  assert.match(
+    html,
+    /<video[^>]+controls[^>]+muted[^>]+loop[^>]+playsinline[^>]+data-demo-autoplay/,
+  );
   assert.match(module, /IntersectionObserver/);
   assert.match(module, /video\.loop = true/);
   assert.match(module, /addEventListener\('ended'/);
@@ -250,14 +294,27 @@ test('observador aciona a reprodução automática do vídeo', async () => {
   let callback;
   let playCalls = 0;
   let unobserveCalls = 0;
-  const video = { muted: false, play: () => { playCalls += 1; return Promise.resolve(); }, addEventListener() {} };
-  globalThis.document = { querySelector: selector => selector === '[data-demo-autoplay]' ? video : null };
+  const video = {
+    muted: false,
+    play: () => {
+      playCalls += 1;
+      return Promise.resolve();
+    },
+    addEventListener() {},
+  };
+  globalThis.document = {
+    querySelector: (selector) => (selector === '[data-demo-autoplay]' ? video : null),
+  };
   globalThis.matchMedia = () => ({ matches: false });
   globalThis.window = { IntersectionObserver: true };
   globalThis.IntersectionObserver = class {
-    constructor(handler) { callback = handler; }
+    constructor(handler) {
+      callback = handler;
+    }
     observe() {}
-    unobserve() { unobserveCalls += 1; }
+    unobserve() {
+      unobserveCalls += 1;
+    }
   };
 
   const moduleUrl = pathToFileURL(resolve(root, 'js/modules/video-autoplay.js')).href;

@@ -24,8 +24,11 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 22
+          cache: npm
+      - name: Instalar dependências
+        run: npm ci
       - name: Validar site
-        run: npm test
+        run: npm run check
       - name: Preparar arquivos públicos
         run: |
           mkdir _site

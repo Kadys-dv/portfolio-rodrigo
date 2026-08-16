@@ -5,14 +5,22 @@
   "type": "module",
   "scripts": {
     "test": "node --test",
-    "check": "node --check js/main.js && node --test",
+    "lint": "biome check",
+    "lint:fix": "biome check --write",
+    "knip": "knip",
+    "check": "node --check js/main.js && npm run lint && npm run knip && node --test",
     "test:video": "node tests/video-browser-check.mjs",
     "test:layout": "node tests/layout-browser-check.mjs && node tests/mobile-alignment-browser-check.mjs",
+    "test:e2e:run": "node tests/e2e-portfolio.mjs",
+    "test:e2e": "start-server-and-test serve http://127.0.0.1:4173 test:e2e:run",
     "pdf:curriculo": "node tests/generate-resume-pdf.mjs",
     "serve": "http-server . -p 4173 -a 127.0.0.1 -c-1"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.5.8",
     "http-server": "^14.1.1",
-    "playwright": "^1.62.1"
+    "knip": "6.32.2",
+    "playwright": "^1.62.1",
+    "start-server-and-test": "3.0.12"
   }
 }

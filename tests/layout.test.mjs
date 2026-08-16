@@ -1,9 +1,9 @@
-import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import test from 'node:test';
 
-const read = path => readFile(resolve(path), 'utf8');
+const read = (path) => readFile(resolve(path), 'utf8');
 
 test('apresentacao pessoal centralizada sem botao redundante', async () => {
   const [html, styles] = await Promise.all([read('index.html'), read('styles/main.css')]);

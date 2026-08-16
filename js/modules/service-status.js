@@ -41,7 +41,8 @@ export function initServiceStatus() {
     renderStatus(panel, 'api', apiOnline);
     const onlineCount = Number(appOnline) + Number(apiOnline);
     panel.classList.toggle('has-online-status', onlineCount > 0);
-    if (summary) summary.textContent = `${onlineCount}/2 serviços públicos responderam · atualizado agora`;
+    if (summary)
+      summary.textContent = `${onlineCount}/2 serviços públicos responderam · atualizado agora`;
     refresh?.removeAttribute('disabled');
   };
 

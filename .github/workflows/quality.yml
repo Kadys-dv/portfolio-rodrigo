@@ -19,5 +19,12 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 22
-      - name: Executar validações
-        run: npm test
+          cache: npm
+      - name: Instalar dependências
+        run: npm ci
+      - name: Instalar navegador para testes end-to-end
+        run: npx playwright install --with-deps chromium
+      - name: Executar validações de código
+        run: npm run check
+      - name: Executar testes end-to-end
+        run: npm run test:e2e

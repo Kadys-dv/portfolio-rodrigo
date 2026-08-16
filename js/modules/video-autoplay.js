@@ -37,11 +37,14 @@ export function initVideoAutoplay() {
     return;
   }
 
-  observer = new IntersectionObserver((entries) => {
-    visible = entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= 0.2);
-    if (!visible) return;
-    attemptPlay();
-  }, { threshold: [0.2] });
+  observer = new IntersectionObserver(
+    (entries) => {
+      visible = entries.some((entry) => entry.isIntersecting && entry.intersectionRatio >= 0.2);
+      if (!visible) return;
+      attemptPlay();
+    },
+    { threshold: [0.2] },
+  );
 
   observer.observe(video);
 }

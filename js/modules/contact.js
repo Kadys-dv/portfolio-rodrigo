@@ -7,7 +7,9 @@ export function initContact() {
   const emailLink = section.querySelector('[data-email-link]');
 
   if (heading) heading.textContent = 'Vamos conversar?';
-  if (description) description.textContent = 'Estou disponível para oportunidades em desenvolvimento web, mobile e backend.';
+  if (description)
+    description.textContent =
+      'Estou disponível para oportunidades em desenvolvimento web, mobile e backend.';
   if (emailLink) {
     emailLink.href = 'mailto:cskadys@gmail.com?subject=Contato%20pelo%20portf%C3%B3lio';
     emailLink.removeAttribute('target');

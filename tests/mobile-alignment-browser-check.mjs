@@ -5,28 +5,36 @@ const browser = await chromium.launch({
   executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
 });
 
-for (const viewport of [{ name: 'compact', width: 360, height: 800 }, { name: 'motorola', width: 432, height: 960 }]) {
+for (const viewport of [
+  { name: 'compact', width: 360, height: 800 },
+  { name: 'motorola', width: 432, height: 960 },
+]) {
   const page = await browser.newPage({ viewport });
   const errors = [];
-  page.on('pageerror', error => errors.push(error.message));
+  page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('http://127.0.0.1:4173/', { waitUntil: 'networkidle' });
   const result = await page.evaluate(() => {
-    const centered = selector => getComputedStyle(document.querySelector(selector)).textAlign === 'center';
+    const centered = (selector) =>
+      getComputedStyle(document.querySelector(selector)).textAlign === 'center';
     return {
       overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth,
       projectTitle: centered('#projetos .section-title'),
       skill: centered('.skill'),
       certificate: centered('.cert-card > div'),
       footer: centered('.footer-inner'),
-      availabilityFlex: getComputedStyle(document.querySelector('.availability')).display === 'flex',
+      availabilityFlex:
+        getComputedStyle(document.querySelector('.availability')).display === 'flex',
       availabilityStartsTogether: (() => {
         const container = document.querySelector('.availability');
         const dot = container.querySelector('.availability-dot').getBoundingClientRect();
         const lineTop = container.getBoundingClientRect().top;
         return dot.top - lineTop < 12;
       })(),
-      obsoleteContactText: document.body.textContent.includes('O botão abre uma nova mensagem no Gmail'),
-      themeLabelVisible: getComputedStyle(document.querySelector('[data-theme-label]')).display !== 'none',
+      obsoleteContactText: document.body.textContent.includes(
+        'O botão abre uma nova mensagem no Gmail',
+      ),
+      themeLabelVisible:
+        getComputedStyle(document.querySelector('[data-theme-label]')).display !== 'none',
     };
   });
   const themeChanged = await page.evaluate(() => {
@@ -35,7 +43,20 @@ for (const viewport of [{ name: 'compact', width: 360, height: 800 }, { name: 'm
   });
   result.themeChanged = themeChanged;
   console.log(JSON.stringify({ viewport: viewport.name, result, errors }));
-  if (result.overflow || result.obsoleteContactText || !result.projectTitle || !result.skill || !result.certificate || !result.footer || !result.availabilityFlex || !result.availabilityStartsTogether || !result.themeLabelVisible || !result.themeChanged || errors.length) process.exitCode = 1;
+  if (
+    result.overflow ||
+    result.obsoleteContactText ||
+    !result.projectTitle ||
+    !result.skill ||
+    !result.certificate ||
+    !result.footer ||
+    !result.availabilityFlex ||
+    !result.availabilityStartsTogether ||
+    !result.themeLabelVisible ||
+    !result.themeChanged ||
+    errors.length
+  )
+    process.exitCode = 1;
   await page.close();
 }
 
