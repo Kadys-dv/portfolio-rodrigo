@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PlayMatch — lançamento vertical</title>
+    <style>
+      :root { color-scheme: dark; }
+      * { box-sizing: border-box; }
+      body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #071c17; color: #fff; font-family: Arial, Helvetica, sans-serif; }
+      .stage { position: relative; isolation: isolate; width: 100%; height: 100%; overflow: hidden; background: radial-gradient(circle at 73% 13%, rgba(71, 226, 157, .43), transparent 23%), radial-gradient(circle at 8% 78%, rgba(22, 112, 83, .7), transparent 30%), linear-gradient(155deg, #061b15 0%, #0a2f24 52%, #061713 100%); }
+      .orb { position: absolute; z-index: -1; border-radius: 50%; filter: blur(2px); opacity: .68; animation: drift 8s ease-in-out infinite alternate; }
+      .orb.one { width: 650px; height: 650px; top: -220px; right: -165px; background: radial-gradient(circle, rgba(143, 255, 198, .6), rgba(18, 111, 77, 0)); }
+      .orb.two { width: 520px; height: 520px; bottom: 0; left: -240px; background: radial-gradient(circle, rgba(28, 155, 104, .52), rgba(8, 44, 34, 0)); animation-delay: -2.5s; }
+      .grid { position:absolute; inset: 0; z-index:-1; opacity:.16; background-image: linear-gradient(rgba(170,255,215,.22) 1px, transparent 1px), linear-gradient(90deg, rgba(170,255,215,.22) 1px, transparent 1px); background-size: 54px 54px; mask-image: linear-gradient(to bottom, transparent, #000 22%, #000 76%, transparent); }
+      .brand { position:absolute; top:92px; left:0; right:0; display:flex; align-items:center; justify-content:center; gap:18px; font-size:29px; letter-spacing:.17em; font-weight:800; color:#d8ffea; opacity:0; animation: rise .7s .25s forwards; }
+      .brand img { width:54px; height:54px; object-fit:contain; filter: drop-shadow(0 10px 16px rgba(0,0,0,.35)); }
+      .scene { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; text-align:center; opacity:0; pointer-events:none; }
+      .scene.intro { justify-content:center; padding: 0 105px; animation: sceneIntro 4.7s both; }
+      .eyebrow { color:#94ffc7; font-size:26px; font-weight:800; letter-spacing:.22em; text-transform:uppercase; margin-bottom:25px; }
+      h1, h2, p { margin:0; }
+      h1 { font-size:94px; line-height:.97; letter-spacing:-.055em; max-width:830px; text-wrap:balance; }
+      h2 { font-size:66px; line-height:1.04; letter-spacing:-.045em; text-wrap:balance; }
+      .lead { max-width:760px; margin-top:34px; color:#c7efe0; font-size:34px; line-height:1.35; }
+      .scene.intro h1 { opacity:0; animation: rise .8s .7s forwards; }
+      .scene.intro .lead { opacity:0; animation: rise .8s 1.03s forwards; }
+      .scene.feature { padding: 235px 78px 120px; justify-content:flex-start; }
+      .scene.feature .copy { width:100%; opacity:0; transform:translateY(38px); }
+      .scene.feature .kicker { color:#9cffcd; font-size:24px; font-weight:800; text-transform:uppercase; letter-spacing:.16em; margin-bottom:22px; }
+      .phone { position:relative; width:625px; height:1040px; margin-top:65px; border-radius:76px; padding:18px; background:linear-gradient(145deg,#e3fff0,#39735c 42%,#0b2119 62%,#b6ffda); box-shadow: 0 38px 70px rgba(0,0,0,.45), inset 0 0 0 2px rgba(255,255,255,.78); transform:perspective(1300px) rotateY(-11deg) rotateX(3deg) translateY(100px); opacity:0; overflow:hidden; }
+      .phone::before { content:''; position:absolute; width:205px; height:31px; border-radius:0 0 20px 20px; top:18px; left:50%; transform:translateX(-50%); background:#0b1712; z-index:2; }
+      .phone img { width:100%; height:100%; border-radius:60px; object-fit:cover; object-position:top; background:#123; }
+      .phone-glow { position:absolute; inset:0; border-radius:76px; pointer-events:none; box-shadow: inset 0 1px 2px rgba(255,255,255,.85), inset -10px -10px 24px rgba(0,0,0,.15); }
+      .scene.jogos { animation: sceneTwo 6s 4.05s both; }
+      .scene.local { animation: sceneTwo 6s 10.05s both; }
+      .scene.sala { animation: sceneTwo 5.2s 16.05s both; }
+      .scene.feature .copy, .scene.feature .phone { animation: featureIn .9s both; }
+      .scene.jogos .copy, .scene.jogos .phone { animation-delay:4.45s; }
+      .scene.local .copy, .scene.local .phone { animation-delay:10.45s; }
+      .scene.sala .copy, .scene.sala .phone { animation-delay:16.45s; }
+      .scene.local .phone { transform:perspective(1300px) rotateY(11deg) rotateX(3deg) translateY(100px); }
+      .scene.sala .phone { margin-top:52px; height:990px; }
+      .badge { position:absolute; right:-10px; bottom:112px; display:flex; align-items:center; gap:12px; padding:18px 22px; border:1px solid rgba(255,255,255,.48); border-radius:22px; background:rgba(6,31,23,.83); backdrop-filter:blur(16px); color:#e8fff2; font-size:25px; font-weight:700; box-shadow:0 18px 34px rgba(0,0,0,.32); opacity:0; animation: badgeIn .65s both; }
+      .scene.jogos .badge { animation-delay:5.5s; }
+      .scene.local .badge { animation-delay:11.5s; }
+      .scene.sala .badge { animation-delay:17.5s; }
+      .badge .dot { width:15px; height:15px; border-radius:50%; background:#81ffbc; box-shadow:0 0 16px #81ffbc; }
+      .scene.outro { justify-content:center; padding:0 96px; animation: outro 2.2s 20.65s both; }
+      .scene.outro h2 { font-size:76px; }
+      .cta { display:inline-flex; align-items:center; justify-content:center; margin-top:48px; padding:24px 42px; border-radius:20px; background:#89ffbd; color:#082116; font-size:29px; font-weight:900; box-shadow:0 18px 38px rgba(102,255,170,.22); }
+      .footer { position:absolute; left:0; right:0; bottom:78px; text-align:center; color:#a7d8c0; font-size:21px; letter-spacing:.08em; opacity:0; animation:rise .6s 1.3s forwards; }
+      @keyframes rise { to { opacity:1; transform:translateY(0); } from { opacity:0; transform:translateY(24px); } }
+      @keyframes drift { to { transform:translate3d(35px, 55px, 0) scale(1.08); } }
+      @keyframes sceneIntro { 0%, 76% { opacity:1; } 100% { opacity:0; } }
+      @keyframes sceneTwo { 0%, 3% { opacity:0; } 8%, 90% { opacity:1; } 100% { opacity:0; } }
+      @keyframes featureIn { to { opacity:1; transform:perspective(1300px) rotateY(-11deg) rotateX(3deg) translateY(0); } }
+      .scene.local .phone { animation-name: featureInLocal; }
+      @keyframes featureInLocal { to { opacity:1; transform:perspective(1300px) rotateY(11deg) rotateX(3deg) translateY(0); } }
+      @keyframes badgeIn { to { opacity:1; transform:translateY(0); } from { opacity:0; transform:translateY(26px) scale(.94); } }
+      @keyframes outro { 0%, 10% { opacity:0; transform:scale(.96); } 27%, 100% { opacity:1; transform:scale(1); } }
+    </style>
+  </head>
+  <body>
+    <main class="stage">
+      <div class="orb one"></div><div class="orb two"></div><div class="grid"></div>
+      <div class="brand"><img src="../assets/playmatch/icone.png" alt="" /> PLAYMATCH</div>
+      <section class="scene intro">
+        <div class="eyebrow">Lançamento</div>
+        <h1>Seu próximo jogo começa aqui.</h1>
+        <p class="lead">Encontre partidas, confirme presença e entre em campo com a sua comunidade.</p>
+      </section>
+      <section class="scene feature jogos">
+        <div class="copy"><p class="kicker">Descoberta inteligente</p><h2>Jogos que combinam com o seu ritmo.</h2></div>
+        <div class="phone"><img src="../assets/playmatch/jogos.png" alt="Tela de jogos" /><div class="phone-glow"></div></div>
+        <div class="badge"><span class="dot"></span> Jogos disponíveis</div>
+      </section>
+      <section class="scene feature local">
+        <div class="copy"><p class="kicker">Localização</p><h2>Veja onde a partida vai acontecer.</h2></div>
+        <div class="phone"><img src="../assets/playmatch/local.png" alt="Tela de localização" /><div class="phone-glow"></div></div>
+        <div class="badge"><span class="dot"></span> Rota até o jogo</div>
+      </section>
+      <section class="scene feature sala">
+        <div class="copy"><p class="kicker">Comunidade</p><h2>Confirme. Conecte. Jogue.</h2></div>
+        <div class="phone"><img src="../assets/playmatch/sala.png" alt="Sala do jogo" /><div class="phone-glow"></div></div>
+        <div class="badge"><span class="dot"></span> Time confirmado</div>
+      </section>
+      <section class="scene outro"><div class="eyebrow">PlayMatch</div><h2>Mais jogo.<br />Mais conexão.</h2><div class="cta">Disponível para testar</div></section>
+      <div class="footer">Desenvolvido por Dev Rodrigo</div>
+    </main>
+  </body>
+</html>
