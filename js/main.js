@@ -8,6 +8,7 @@ import { initVideoAutoplay } from './modules/video-autoplay.js?v=20260811-3';
 import { initServiceStatus } from './modules/service-status.js?v=20260812-1';
 import { initCodeTyping } from './modules/code-typing.js?v=20260812-3';
 import { initContact } from './modules/contact.js?v=20260815-1';
+import { initMotion } from './modules/motion.js?v=20260815-1';
 
 document.documentElement.classList.add('js');
 
@@ -20,6 +21,7 @@ initVideoAutoplay();
 initServiceStatus();
 initCodeTyping();
 initContact();
+initMotion();
 
 const ritmoraxShowcase = document.querySelector('[data-ritmorax-showcase]');
 if (ritmoraxShowcase) {

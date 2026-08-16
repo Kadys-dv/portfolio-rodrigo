@@ -145,6 +145,27 @@ test('blocos de código usam animação de digitação acessível', async () => 
   assert.match(css, /transform-style:preserve-3d/);
 });
 
+test('sistema de movimento prioriza sequências, métricas e acessibilidade', async () => {
+  const [html, main, motion, css, status] = await Promise.all([
+    read('index.html'),
+    read('js/main.js'),
+    read('js/modules/motion.js'),
+    read('styles/main.css'),
+    read('js/modules/service-status.js'),
+  ]);
+  assert.match(main, /initMotion/);
+  assert.match(html, /data-count-to="20"/);
+  assert.match(html, /data-count-to="6"/);
+  assert.match(html, /data-count-to="9"/);
+  assert.match(motion, /IntersectionObserver/);
+  assert.match(motion, /prefers-reduced-motion/);
+  assert.match(motion, /career-timeline li/);
+  assert.match(css, /motion-enter/);
+  assert.match(css, /has-online-status/);
+  assert.match(css, /prefers-reduced-motion:reduce/);
+  assert.match(status, /has-online-status/);
+});
+
 test('contato usa mailto e destaca as redes profissionais', async () => {
   const [html, contactModule] = await Promise.all([read('index.html'), read('js/modules/contact.js')]);
   assert.match(contactModule, /mailto:cskadys@gmail\.com\?subject=Contato%20pelo%20portf%C3%B3lio/);
