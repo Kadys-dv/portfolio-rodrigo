@@ -8,10 +8,11 @@ const createExperienceCard = ({ eyebrow, title, summary, bullets, href }) => {
   return article;
 };
 
-const createFeaturedCase = ({ title, kicker, heading, description, features, tech, href, github }) => {
+const createFeaturedCase = ({ title, kicker, heading, description, features, tech, href, github, flow }) => {
   const article = document.createElement('article');
   article.className = 'case-study reveal';
-  article.innerHTML = `<div class="case-copy"><div class="case-brand"><div><small>${kicker}</small><strong>${title}</strong></div></div><h3>${heading}</h3><p>${description}</p><ul class="feature-list">${features.map((item) => `<li>${item}</li>`).join('')}</ul><div class="tech-list">${tech.map((item) => `<span>${item}</span>`).join('')}</div><div class="actions"><a class="button primary" href="${href}">Ver estudo de caso</a>${github ? safeExternalLink(github, 'Ver repositório') : ''}</div></div>`;
+  article.style.marginBottom = '34px';
+  article.innerHTML = `<div class="case-copy"><div class="case-brand"><div><small>${kicker}</small><strong>${title}</strong></div></div><h3>${heading}</h3><p>${description}</p><ul class="feature-list">${features.map((item) => `<li>${item}</li>`).join('')}</ul><div class="tech-list">${tech.map((item) => `<span>${item}</span>`).join('')}</div><div class="actions"><a class="button light" href="${href}">Ver estudo de caso</a>${github ? safeExternalLink(github, 'Ver repositório') : ''}</div></div><div class="api-visual" aria-hidden="true"><div class="code-window"><div class="code-bar"><i></i><i></i><i></i><span>${title}</span></div><pre>${flow.map((item, index) => `${index ? '<span>↓</span>\n' : ''}${item}`).join('\n')}</pre></div></div>`;
   return article;
 };
 
@@ -69,6 +70,7 @@ const addPrimaryProjects = () => {
       tech: ['Java 21', 'Spring Boot', 'PostgreSQL', 'Redis', 'WebAuthn', 'Testcontainers'],
       href: 'projetos/fazerobem.html',
       github: 'https://github.com/Kadys-dv/fazerobem',
+      flow: ['MEMBER → REQUEST', 'ANALYST → ANTIFRAUD', 'APPROVER A + B', 'ADMIN → PROCESSING', 'PROVIDER → PAID', 'LEDGER + AUDIT'],
     });
     mutualAidCase.dataset.featured = 'fazerobem';
 
@@ -81,6 +83,7 @@ const addPrimaryProjects = () => {
       tech: ['Java 21', 'Spring Boot', 'WebAuthn', 'PostgreSQL', 'Flyway', 'Docker'],
       href: 'projetos/hatp.html',
       github: 'https://github.com/Kadys-dv/hatp-shopping-agent',
+      flow: ['AI AGENT → INTENT', 'HATP → POLICY', 'ALLOW / DENY', 'HUMAN_REQUIRED', 'PASSKEY / FIDO', 'BOUND DECISION'],
     });
     hatpCase.dataset.featured = 'hatp';
 
