@@ -9,6 +9,28 @@ const browser = await chromium.launch({
   ...(process.platform === 'win32' && existsSync(chromePath) ? { executablePath: chromePath } : {}),
 });
 
+const assertExternalProjectButtonContrast = async (page, viewportName, themeName) => {
+  const links = page.locator('[data-project-external-link]');
+  assert.equal(await links.count(), 2);
+
+  for (let index = 0; index < 2; index += 1) {
+    const styles = await links.nth(index).evaluate((element) => {
+      const computed = getComputedStyle(element);
+      return { backgroundColor: computed.backgroundColor, color: computed.color };
+    });
+    assert.equal(
+      styles.backgroundColor,
+      'rgb(255, 255, 255)',
+      `${viewportName}/${themeName}: fundo do botão externo deve permanecer branco`,
+    );
+    assert.equal(
+      styles.color,
+      'rgb(6, 34, 25)',
+      `${viewportName}/${themeName}: texto do botão externo deve permanecer escuro`,
+    );
+  }
+};
+
 try {
   for (const viewport of [
     { name: 'desktop', width: 1440, height: 1000 },
@@ -31,10 +53,12 @@ try {
       ),
       false,
     );
+    await assertExternalProjectButtonContrast(page, viewport.name, 'claro');
 
     if (viewport.name === 'mobile') await page.locator('[data-menu-button]').click();
     await page.locator('[data-theme-toggle]').click();
     assert.equal(await page.locator('[data-theme-label]').textContent(), 'Tema escuro');
+    await assertExternalProjectButtonContrast(page, viewport.name, 'escuro');
 
     await page.locator('[data-image]').nth(1).click();
     assert.match(await page.locator('[data-screen]').getAttribute('src'), /local\.png$/);
