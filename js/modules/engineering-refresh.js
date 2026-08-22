@@ -1,5 +1,5 @@
 const safeExternalLink = (href, label) =>
-  `<a class="button secondary" href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+  `<a class="button secondary" data-project-external-link href="${href}" target="_blank" rel="noopener noreferrer" style="background:#fff;color:#062219">${label}</a>`;
 
 const createExperienceCard = ({ eyebrow, title, summary, bullets, href }) => {
   const article = document.createElement('article');
