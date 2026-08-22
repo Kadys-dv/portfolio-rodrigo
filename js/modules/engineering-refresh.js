@@ -8,7 +8,17 @@ const createExperienceCard = ({ eyebrow, title, summary, bullets, href }) => {
   return article;
 };
 
-const createFeaturedCase = ({ title, kicker, heading, description, features, tech, href, github, flow }) => {
+const createFeaturedCase = ({
+  title,
+  kicker,
+  heading,
+  description,
+  features,
+  tech,
+  href,
+  github,
+  flow,
+}) => {
   const article = document.createElement('article');
   article.className = 'case-study reveal';
   article.style.marginBottom = '34px';
@@ -23,24 +33,34 @@ const addTimelineItems = () => {
   const security = document.createElement('li');
   security.className = 'reveal';
   security.dataset.career = 'security';
-  security.innerHTML = '<span>05</span><i aria-hidden="true">◈</i><div><small>SEGURANÇA E SISTEMAS CRÍTICOS</small><h3>HATP Authority Firewall</h3><p>Camada de autorização humana verificável para agentes de IA, com WebAuthn, transaction binding e proteção contra replay.</p><b>Segurança</b></div>';
+  security.innerHTML =
+    '<span>05</span><i aria-hidden="true">◈</i><div><small>SEGURANÇA E SISTEMAS CRÍTICOS</small><h3>HATP Authority Firewall</h3><p>Camada de autorização humana verificável para agentes de IA, com WebAuthn, transaction binding e proteção contra replay.</p><b>Segurança</b></div>';
 
   const mutualAid = document.createElement('li');
   mutualAid.className = 'reveal';
   mutualAid.dataset.career = 'governance';
-  mutualAid.innerHTML = '<span>06</span><i aria-hidden="true">◇</i><div><small>ENGENHARIA DE ALTA CONFIANÇA</small><h3>Fazer o Bem</h3><p>Plataforma sandbox de ajuda mútua com ledger, auditoria, concorrência, WebAuthn, Redis, reconciliação e gates de Production Readiness.</p><b>Engenharia</b></div>';
+  mutualAid.innerHTML =
+    '<span>06</span><i aria-hidden="true">◇</i><div><small>ENGENHARIA DE ALTA CONFIANÇA</small><h3>Fazer o Bem</h3><p>Plataforma sandbox de ajuda mútua com ledger, auditoria, concorrência, WebAuthn, Redis, reconciliação e gates de Production Readiness.</p><b>Engenharia</b></div>';
 
   timeline.append(security, mutualAid);
 };
 
 const addPrimaryProjects = () => {
   const experienceGrid = document.querySelector('.experience-grid');
-  if (experienceGrid && !experienceGrid.querySelector('[data-project="fazerobem"]')) {
+  if (
+    experienceGrid &&
+    !experienceGrid.querySelector('[data-project="fazerobem"]')
+  ) {
     const fazerobem = createExperienceCard({
       eyebrow: 'PROJETO INDEPENDENTE · JAVA / SEGURANÇA',
       title: 'Fazer o Bem',
-      summary: 'Plataforma de ajuda mútua em sandbox/staging projetada para preservar governança, rastreabilidade e invariantes financeiras sem habilitar dinheiro real antes das evidências externas obrigatórias.',
-      bullets: ['Spring Boot, PostgreSQL, Redis e Flyway', 'Ledger/auditoria, dupla aprovação e idempotência', 'WebAuthn, KMS, CI, chaos/DR e reconciliação'],
+      summary:
+        'Plataforma de ajuda mútua em sandbox/staging projetada para preservar governança, rastreabilidade e invariantes financeiras sem habilitar dinheiro real antes das evidências externas obrigatórias.',
+      bullets: [
+        'Spring Boot, PostgreSQL, Redis e Flyway',
+        'Ledger/auditoria, dupla aprovação e idempotência',
+        'WebAuthn, KMS, CI, chaos/DR e reconciliação',
+      ],
       href: 'projetos/fazerobem.html',
     });
     fazerobem.dataset.project = 'fazerobem';
@@ -48,8 +68,13 @@ const addPrimaryProjects = () => {
     const hatp = createExperienceCard({
       eyebrow: 'PROJETO INDEPENDENTE · SECURITY / AI',
       title: 'HATP Authority Firewall',
-      summary: 'Camada de autorização que impede agentes de IA de ultrapassarem autoridade delegada em operações críticas, exigindo confirmação humana verificável quando necessário.',
-      bullets: ['ALLOW / DENY / HUMAN_REQUIRED', 'Passkeys/WebAuthn e transaction binding', 'Replay protection e políticas por organização'],
+      summary:
+        'Camada de autorização que impede agentes de IA de ultrapassarem autoridade delegada em operações críticas, exigindo confirmação humana verificável quando necessário.',
+      bullets: [
+        'ALLOW / DENY / HUMAN_REQUIRED',
+        'Passkeys/WebAuthn e transaction binding',
+        'Replay protection e políticas por organização',
+      ],
       href: 'projetos/hatp.html',
     });
     hatp.dataset.project = 'hatp';
@@ -60,17 +85,41 @@ const addPrimaryProjects = () => {
 
   const projectsContainer = document.querySelector('#projetos .container');
   const firstExistingCase = projectsContainer?.querySelector('.case-study');
-  if (projectsContainer && firstExistingCase && !projectsContainer.querySelector('[data-featured="fazerobem"]')) {
+  if (
+    projectsContainer &&
+    firstExistingCase &&
+    !projectsContainer.querySelector('[data-featured="fazerobem"]')
+  ) {
     const mutualAidCase = createFeaturedCase({
       title: 'Fazer o Bem',
       kicker: 'ESTUDO DE CASO · JAVA / SECURITY',
       heading: 'Ajuda mútua com governança verificável.',
-      description: 'Projeto sandbox/staging focado em separar funções, evitar liquidação duplicada e tornar pagamentos, auditoria e reconciliação verificáveis antes de qualquer discussão sobre dinheiro real.',
-      features: ['Dupla aprovação e segregação ANALYST / APPROVER / ADMIN / AUDITOR', 'Ledger e auditoria encadeados', 'Idempotência, webhook assinado e replay protection', 'Carga/concorrência, chaos/DR e rehearsal de staging'],
-      tech: ['Java 21', 'Spring Boot', 'PostgreSQL', 'Redis', 'WebAuthn', 'Testcontainers'],
+      description:
+        'Projeto sandbox/staging focado em separar funções, evitar liquidação duplicada e tornar pagamentos, auditoria e reconciliação verificáveis antes de qualquer discussão sobre dinheiro real.',
+      features: [
+        'Dupla aprovação e segregação ANALYST / APPROVER / ADMIN / AUDITOR',
+        'Ledger e auditoria encadeados',
+        'Idempotência, webhook assinado e replay protection',
+        'Carga/concorrência, chaos/DR e rehearsal de staging',
+      ],
+      tech: [
+        'Java 21',
+        'Spring Boot',
+        'PostgreSQL',
+        'Redis',
+        'WebAuthn',
+        'Testcontainers',
+      ],
       href: 'projetos/fazerobem.html',
       github: 'https://github.com/Kadys-dv/fazerobem',
-      flow: ['MEMBER → REQUEST', 'ANALYST → ANTIFRAUD', 'APPROVER A + B', 'ADMIN → PROCESSING', 'PROVIDER → PAID', 'LEDGER + AUDIT'],
+      flow: [
+        'MEMBER → REQUEST',
+        'ANALYST → ANTIFRAUD',
+        'APPROVER A + B',
+        'ADMIN → PROCESSING',
+        'PROVIDER → PAID',
+        'LEDGER + AUDIT',
+      ],
     });
     mutualAidCase.dataset.featured = 'fazerobem';
 
@@ -78,12 +127,32 @@ const addPrimaryProjects = () => {
       title: 'HATP Authority Firewall',
       kicker: 'ESTUDO DE CASO · AI SECURITY',
       heading: 'Autoridade humana antes de ações críticas de agentes de IA.',
-      description: 'Uma camada de políticas para decidir quando um agente pode prosseguir autonomamente e quando precisa de confirmação humana criptograficamente verificável.',
-      features: ['Decisões ALLOW / DENY / HUMAN_REQUIRED', 'Passkeys/WebAuthn com user verification', 'Transaction binding e proteção contra replay', 'Isolamento por organização e auditoria'],
-      tech: ['Java 21', 'Spring Boot', 'WebAuthn', 'PostgreSQL', 'Flyway', 'Docker'],
+      description:
+        'Uma camada de políticas para decidir quando um agente pode prosseguir autonomamente e quando precisa de confirmação humana criptograficamente verificável.',
+      features: [
+        'Decisões ALLOW / DENY / HUMAN_REQUIRED',
+        'Passkeys/WebAuthn com user verification',
+        'Transaction binding e proteção contra replay',
+        'Isolamento por organização e auditoria',
+      ],
+      tech: [
+        'Java 21',
+        'Spring Boot',
+        'WebAuthn',
+        'PostgreSQL',
+        'Flyway',
+        'Docker',
+      ],
       href: 'projetos/hatp.html',
       github: 'https://github.com/Kadys-dv/hatp-shopping-agent',
-      flow: ['AI AGENT → INTENT', 'HATP → POLICY', 'ALLOW / DENY', 'HUMAN_REQUIRED', 'PASSKEY / FIDO', 'BOUND DECISION'],
+      flow: [
+        'AI AGENT → INTENT',
+        'HATP → POLICY',
+        'ALLOW / DENY',
+        'HUMAN_REQUIRED',
+        'PASSKEY / FIDO',
+        'BOUND DECISION',
+      ],
     });
     hatpCase.dataset.featured = 'hatp';
 
