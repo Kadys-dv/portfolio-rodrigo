@@ -47,10 +47,7 @@ const addTimelineItems = () => {
 
 const addPrimaryProjects = () => {
   const experienceGrid = document.querySelector('.experience-grid');
-  if (
-    experienceGrid &&
-    !experienceGrid.querySelector('[data-project="fazerobem"]')
-  ) {
+  if (experienceGrid && !experienceGrid.querySelector('[data-project="fazerobem"]')) {
     const fazerobem = createExperienceCard({
       eyebrow: 'PROJETO INDEPENDENTE · JAVA / SEGURANÇA',
       title: 'Fazer o Bem',
@@ -102,14 +99,7 @@ const addPrimaryProjects = () => {
         'Idempotência, webhook assinado e replay protection',
         'Carga/concorrência, chaos/DR e rehearsal de staging',
       ],
-      tech: [
-        'Java 21',
-        'Spring Boot',
-        'PostgreSQL',
-        'Redis',
-        'WebAuthn',
-        'Testcontainers',
-      ],
+      tech: ['Java 21', 'Spring Boot', 'PostgreSQL', 'Redis', 'WebAuthn', 'Testcontainers'],
       href: 'projetos/fazerobem.html',
       github: 'https://github.com/Kadys-dv/fazerobem',
       flow: [
@@ -135,14 +125,7 @@ const addPrimaryProjects = () => {
         'Transaction binding e proteção contra replay',
         'Isolamento por organização e auditoria',
       ],
-      tech: [
-        'Java 21',
-        'Spring Boot',
-        'WebAuthn',
-        'PostgreSQL',
-        'Flyway',
-        'Docker',
-      ],
+      tech: ['Java 21', 'Spring Boot', 'WebAuthn', 'PostgreSQL', 'Flyway', 'Docker'],
       href: 'projetos/hatp.html',
       github: 'https://github.com/Kadys-dv/hatp-shopping-agent',
       flow: [
