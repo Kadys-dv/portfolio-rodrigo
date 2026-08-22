@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Estudo de caso do Fazer o Bem, plataforma Java de ajuda mútua sandbox com governança, ledger, auditoria, WebAuthn, Redis, reconciliação e CI/CD.">
+  <meta name="theme-color" content="#071c16">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://kadys-dv.github.io/portfolio-rodrigo/projetos/fazerobem.html">
+  <meta property="og:title" content="Fazer o Bem — Estudo de caso">
+  <meta property="og:description" content="Engenharia de uma plataforma de ajuda mútua auditável em sandbox/staging.">
+  <meta property="og:type" content="article">
+  <title>Fazer o Bem — Estudo de caso | Rodrigo.dev</title>
+  <link rel="icon" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles/case-study.css?v=20260812-11">
+  <script type="module" src="../js/main.js?v=20260822-1"></script>
+</head>
+<body class="project-page">
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+  <header class="header"><nav class="nav container" aria-label="Navegação do estudo de caso"><a class="brand" href="../index.html"><span>R</span>Rodrigo.dev</a><div class="menu"><a href="../index.html#projetos">Todos os projetos</a><a href="hatp.html">Próximo estudo</a><button class="theme-button" type="button" data-theme-toggle><span class="theme-icon">◐</span><span class="theme-label" data-theme-label>Tema claro</span></button></div></nav></header>
+  <main id="conteudo">
+    <section class="case-hero"><div class="container"><a class="case-breadcrumb" href="../index.html#projetos">← Voltar ao portfólio</a><div class="case-hero-grid"><div><p class="case-kicker">Java · Security · Governance</p><h1>Fazer o Bem</h1><p class="case-lead">Plataforma de ajuda mútua em sandbox/staging desenhada para preservar governança, rastreabilidade e invariantes financeiras antes de qualquer discussão sobre dinheiro real.</p><div class="actions"><a class="button primary" href="https://github.com/Kadys-dv/fazerobem" target="_blank" rel="noopener noreferrer">Ver código no GitHub</a><a class="button secondary" href="#arquitetura">Explorar arquitetura</a></div></div><div class="case-cover"><div class="code-window"><div class="code-bar"><i></i><i></i><i></i><span>payment lifecycle</span></div><pre><span class="token-property">REQUESTED</span>
+  ↓ análise + antifraude
+<span class="token-property">APPROVED</span>
+  ↓ dupla aprovação
+<span class="token-property">PROCESSING</span>
+  ↓ confirmação externa autenticada
+<span class="token-status">PAID</span>
+  ↓
+ledger + auditoria</pre></div></div></div><div class="fact-grid"><article><small>Backend</small><strong>Java 21</strong></article><article><small>Framework</small><strong>Spring Boot</strong></article><article><small>Dados</small><strong>PostgreSQL + Redis</strong></article><article><small>Estado</small><strong>Sandbox / Staging</strong></article></div></div></section>
+
+    <section class="case-section alt" id="arquitetura"><div class="container"><p class="case-kicker">O problema</p><h2>Ajuda mútua exige mais do que CRUD.</h2><div class="content-grid"><article class="content-card"><h3>Segregação de funções</h3><p>Quem analisa, aprova, opera pagamentos e audita não deve concentrar autoridade crítica.</p></article><article class="content-card"><h3>Concorrência</h3><p>Retries e operações simultâneas não podem criar duas tentativas financeiras ativas para o mesmo auxílio.</p></article><article class="content-card"><h3>Rastreabilidade</h3><p>Ledger e auditoria precisam permitir reconstruir decisões e efeitos sem depender apenas de logs voláteis.</p></article><article class="content-card"><h3>Estado externo</h3><p>Uma tentativa local não deve virar PAID até confirmação autenticada e reconciliável do provedor.</p></article></div></div></section>
+
+    <section class="case-section"><div class="container"><p class="case-kicker">Decisões técnicas</p><h2>Fail-closed, idempotente e auditável.</h2><div class="content-grid"><article class="content-card"><h3>Governança</h3><ul><li>ANALYST, APPROVER, ADMIN e AUDITOR</li><li>Dupla aprovação por usuários distintos</li><li>Nenhum botão administrativo força PAID</li></ul></article><article class="content-card"><h3>Segurança</h3><ul><li>WebAuthn/passkeys e TOTP</li><li>AES-256-GCM e KMS</li><li>Webhook HMAC e replay protection</li></ul></article><article class="content-card"><h3>Consistência</h3><ul><li>Idempotência de pagamentos</li><li>Transações e constraints no PostgreSQL</li><li>Estados de reconciliação explícitos</li></ul></article><article class="content-card"><h3>Operação</h3><ul><li>Observabilidade e alertas</li><li>Backup/restore fail-closed</li><li>Kill switch de novas iniciações</li></ul></article></div></div></section>
+
+    <section class="case-section alt"><div class="container"><p class="case-kicker">Arquitetura</p><h2>Autoridade e confirmação externa em camadas claras.</h2><div class="architecture"><article><strong>Member / Ops UI</strong><small>onboarding e operação</small></article><span>→</span><article><strong>Spring Security</strong><small>papéis, MFA e WebAuthn</small></article><span>→</span><article><strong>Domain Services</strong><small>regras, approvals e idempotência</small></article><span>→</span><article><strong>PostgreSQL + Redis</strong><small>estado e coordenação</small></article><span>→</span><article><strong>Provider Sandbox</strong><small>webhook + reconciliação</small></article></div></div></section>
+
+    <section class="case-section"><div class="container"><p class="case-kicker">Qualidade</p><h2>Confiança construída por gates independentes.</h2><div class="content-grid"><article class="content-card"><h3>Fluxo e concorrência</h3><ul><li>Pilot simulation</li><li>Load/concurrency</li><li>Testcontainers PostgreSQL + Redis</li><li>Playwright E2E</li></ul></article><article class="content-card"><h3>Security e readiness</h3><ul><li>Security + staging-config</li><li>Chaos/DR</li><li>Production readiness</li><li>Provider homologation</li></ul></article><article class="content-card"><h3>Operação</h3><ul><li>Operational reconciliation</li><li>Go-live readiness</li><li>Staging rehearsal package</li><li>SBOM e dependency checks</li></ul></article><article class="content-card"><h3>Limite consciente</h3><ul><li>NO-GO para dinheiro real</li><li>Pentest independente pendente</li><li>Revisões jurídica/LGPD pendentes</li><li>Rehearsal real de staging pendente</li></ul></article></div></div></section>
+
+    <section class="case-section alt"><div class="container"><p class="case-kicker">O que aprendi</p><h2>O estado interno não substitui evidência externa.</h2><p class="case-lead">O principal aprendizado foi tratar segurança e readiness como decisões verificáveis: CI verde prova comportamento interno, mas não substitui pentest independente, homologação contratual, validação jurídica/LGPD ou um rehearsal real no ambiente alvo.</p></div></section>
+
+    <section class="case-cta"><div class="container case-cta-card"><h2>Veja o projeto de segurança para agentes de IA.</h2><p>O HATP aplica a mesma preocupação com autoridade, verificação humana e replay protection em outro domínio.</p><div class="actions"><a class="button light" href="hatp.html">Conhecer o HATP →</a><a class="button outline" href="../index.html#contato">Falar com Rodrigo</a></div></div></section>
+  </main>
+  <footer><div class="container footer-inner"><a class="brand" href="../index.html"><span>R</span>Rodrigo.dev</a><p>Desenvolvido por Dev Rodrigo • Todos os direitos reservados • <span data-year></span></p></div></footer>
+</body>
+</html>
