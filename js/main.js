@@ -1,6 +1,7 @@
 import { initCertifications } from './modules/certifications.js';
 import { initCodeTyping } from './modules/code-typing.js?v=20260812-3';
 import { initContact } from './modules/contact.js?v=20260815-1';
+import { initEngineeringRefresh } from './modules/engineering-refresh.js?v=20260822-1';
 import { initMotion } from './modules/motion.js?v=20260815-1';
 import { initNavigation } from './modules/navigation.js';
 import { initReveal } from './modules/reveal.js';
@@ -16,6 +17,7 @@ initNavigation();
 initTheme();
 initShowcase();
 initCertifications();
+initEngineeringRefresh();
 initReveal();
 initVideoAutoplay();
 initServiceStatus();

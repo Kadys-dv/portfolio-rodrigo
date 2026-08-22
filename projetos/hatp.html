@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Estudo de caso do HATP Authority Firewall: autorização humana verificável para agentes de IA com Java, Spring Boot, WebAuthn, transaction binding e replay protection.">
+  <meta name="theme-color" content="#071c16">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://kadys-dv.github.io/portfolio-rodrigo/projetos/hatp.html">
+  <meta property="og:title" content="HATP Authority Firewall — Estudo de caso">
+  <meta property="og:description" content="Human Authority & Transaction Policy para ações críticas de agentes de IA.">
+  <meta property="og:type" content="article">
+  <title>HATP Authority Firewall — Estudo de caso | Rodrigo.dev</title>
+  <link rel="icon" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles/case-study.css?v=20260812-11">
+  <script type="module" src="../js/main.js?v=20260822-1"></script>
+</head>
+<body class="project-page">
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+  <header class="header"><nav class="nav container" aria-label="Navegação do estudo de caso"><a class="brand" href="../index.html"><span>R</span>Rodrigo.dev</a><div class="menu"><a href="../index.html#projetos">Todos os projetos</a><a href="fazerobem.html">Estudo anterior</a><button class="theme-button" type="button" data-theme-toggle><span class="theme-icon">◐</span><span class="theme-label" data-theme-label>Tema claro</span></button></div></nav></header>
+  <main id="conteudo">
+    <section class="case-hero"><div class="container"><a class="case-breadcrumb" href="../index.html#projetos">← Voltar ao portfólio</a><div class="case-hero-grid"><div><p class="case-kicker">AI Security · Human Authority</p><h1>HATP Authority Firewall</h1><p class="case-lead">Camada B2B que decide se um agente de IA pode prosseguir, deve ser bloqueado ou precisa de autorização humana verificável antes de uma ação crítica.</p><div class="actions"><a class="button primary" href="https://github.com/Kadys-dv/hatp-shopping-agent" target="_blank" rel="noopener noreferrer">Ver integração pública</a><a class="button secondary" href="#arquitetura">Explorar arquitetura</a></div></div><div class="case-cover"><div class="code-window"><div class="code-bar"><i></i><i></i><i></i><span>POST /api/v1/authorize</span></div><pre><span class="token-punctuation">{</span>
+  <span class="token-property">"decision"</span><span class="token-punctuation">:</span> <span class="token-string">"HUMAN_REQUIRED"</span><span class="token-punctuation">,</span>
+  <span class="token-property">"verification"</span><span class="token-punctuation">:</span> <span class="token-string">"PASSKEY_FIDO"</span>
+<span class="token-punctuation">}</span>
+
+<span class="token-status">transaction binding + replay protection</span></pre></div></div></div><div class="fact-grid"><article><small>Linguagem</small><strong>Java 21</strong></article><article><small>Framework</small><strong>Spring Boot</strong></article><article><small>Verificação</small><strong>WebAuthn</strong></article><article><small>Persistência</small><strong>PostgreSQL + Flyway</strong></article></div></div></section>
+
+    <section class="case-section alt" id="arquitetura"><div class="container"><p class="case-kicker">O problema</p><h2>Autonomia de IA precisa de limites verificáveis.</h2><div class="content-grid"><article class="content-card"><h3>Autoridade delegada</h3><p>O agente não deve assumir que possuir uma credencial significa possuir autoridade irrestrita para qualquer ação.</p></article><article class="content-card"><h3>Ações de alto impacto</h3><p>Compras, transferências ou mudanças sensíveis podem exigir confirmação humana mesmo quando a integração técnica é válida.</p></article><article class="content-card"><h3>Replay</h3><p>Uma autorização humana válida não pode ser reutilizada para outra transação ou consumida duas vezes.</p></article><article class="content-card"><h3>Auditabilidade</h3><p>A decisão precisa explicar por que foi ALLOW, DENY ou HUMAN_REQUIRED e qual política foi aplicada.</p></article></div></div></section>
+
+    <section class="case-section"><div class="container"><p class="case-kicker">Decisões técnicas</p><h2>Autoridade humana vinculada à transação.</h2><div class="content-grid"><article class="content-card"><h3>Policy engine</h3><ul><li>ALLOW / DENY / HUMAN_REQUIRED</li><li>Limites por ação e organização</li><li>Contexto de delegação explícito</li></ul></article><article class="content-card"><h3>WebAuthn</h3><ul><li>User verification obrigatória</li><li>Passkeys/FIDO</li><li>Credenciais persistentes</li></ul></article><article class="content-card"><h3>Transaction binding</h3><ul><li>decisionId + transaction hash</li><li>Nonce e expiração</li><li>Consumo único da autorização</li></ul></article><article class="content-card"><h3>API B2B</h3><ul><li>API keys com escopos</li><li>Isolamento por organização</li><li>Auditoria e políticas administrativas</li></ul></article></div></div></section>
+
+    <section class="case-section alt"><div class="container"><p class="case-kicker">Arquitetura</p><h2>O agente consulta autoridade antes de executar.</h2><div class="architecture"><article><strong>AI Agent</strong><small>intenção de ação</small></article><span>→</span><article><strong>HATP API</strong><small>contexto + policy</small></article><span>→</span><article><strong>Decision Engine</strong><small>ALLOW / DENY / HUMAN_REQUIRED</small></article><span>→</span><article><strong>WebAuthn</strong><small>verificação humana</small></article><span>→</span><article><strong>Bound Decision</strong><small>autorização consumível uma vez</small></article></div></div></section>
+
+    <section class="case-section"><div class="container"><p class="case-kicker">Segurança</p><h2>Falhar fechado é parte do produto.</h2><div class="content-grid"><article class="content-card"><h3>Replay protection</h3><p>Decisões consumidas não podem ser reaproveitadas; uma segunda conclusão do mesmo fluxo é rejeitada.</p></article><article class="content-card"><h3>Persistência</h3><p>PostgreSQL + Flyway preservam authorizers, credenciais, challenges, policies e auditoria.</p></article><article class="content-card"><h3>Escopos</h3><p>Runtime, verificação humana, administração de políticas e leitura de auditoria são responsabilidades separadas.</p></article><article class="content-card"><h3>Produção consciente</h3><p>Secrets, KMS/HSM, rate limiting, observabilidade, backups e pentest continuam tratados como requisitos antes de produção.</p></article></div></div></section>
+
+    <section class="case-section alt"><div class="container"><p class="case-kicker">Uso de IA no desenvolvimento</p><h2>IA como acelerador, não como substituta da decisão técnica.</h2><p class="case-lead">Ferramentas de IA foram usadas para acelerar implementação, revisão e investigação. Requisitos, decisões de arquitetura, critérios de segurança e validação dos fluxos foram acompanhados como parte do desenvolvimento, e os componentes críticos são explicáveis em entrevista.</p></div></section>
+
+    <section class="case-cta"><div class="container case-cta-card"><h2>Veja a aplicação de governança em outro domínio.</h2><p>O Fazer o Bem leva idempotência, segregação de funções e confirmação externa para uma plataforma de ajuda mútua.</p><div class="actions"><a class="button light" href="fazerobem.html">Conhecer o Fazer o Bem →</a><a class="button outline" href="../index.html#contato">Falar com Rodrigo</a></div></div></section>
+  </main>
+  <footer><div class="container footer-inner"><a class="brand" href="../index.html"><span>R</span>Rodrigo.dev</a><p>Desenvolvido por Dev Rodrigo • Todos os direitos reservados • <span data-year></span></p></div></footer>
+</body>
+</html>
