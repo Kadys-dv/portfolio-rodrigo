@@ -10,23 +10,43 @@ const applyHiringV2 = () => {
     const facts = $('.hero-facts', hero);
     if (eyebrow) eyebrow.innerHTML = '<span></span> Engenharia de software aplicada';
     if (title) title.innerHTML = 'Desenvolvo produtos digitais <em>do app à infraestrutura.</em>';
-    if (lead) lead.textContent = 'Sou Rodrigo, Desenvolvedor de Software Júnior. Construo aplicações com Java e Spring Boot, Flutter e Next.js, aplicando segurança, testes, consistência de dados e CI/CD.';
-    if (facts) facts.innerHTML = '<li><strong>Mobile + Web</strong><span>Produtos completos</span></li><li><strong>Backend Java</strong><span>APIs, PostgreSQL e concorrência</span></li><li><strong>Engenharia</strong><span>Testes, segurança e CI/CD</span></li>';
+    if (lead) {
+      lead.textContent =
+        'Sou Rodrigo, Desenvolvedor de Software Júnior. Construo aplicações com Java e Spring Boot, Flutter e Next.js, aplicando segurança, testes, consistência de dados e CI/CD.';
+    }
+    if (facts) {
+      facts.innerHTML =
+        '<li><strong>Mobile + Web</strong><span>Produtos completos</span></li><li><strong>Backend Java</strong><span>APIs, PostgreSQL e concorrência</span></li><li><strong>Engenharia</strong><span>Testes, segurança e CI/CD</span></li>';
+    }
   }
 
   const floating = $('.floating-label');
   if (floating) floating.textContent = 'Java 21 · Spring Boot · Flutter · Next.js';
 
   const availability = $('.availability-text');
-  if (availability) availability.textContent = 'Buscando oportunidade Júnior em Backend Java, Full Stack ou Mobile';
+  if (availability) {
+    availability.textContent = 'Buscando oportunidade Júnior em Backend Java, Full Stack ou Mobile';
+  }
 
   const aboutParagraphs = $$('.about-copy > p');
-  if (aboutParagraphs[0]) aboutParagraphs[0].textContent = 'Desenvolvo produtos digitais unindo experiência de usuário e engenharia. Meus projetos passam por mobile, frontend, APIs, banco de dados, segurança, testes e deploy.';
-  if (aboutParagraphs[1]) aboutParagraphs[1].textContent = 'Além de implementar funcionalidades, procuro demonstrar decisões técnicas: quais invariantes o servidor protege, como falhas são testadas, como mudanças chegam à produção e como o sistema pode ser diagnosticado.';
+  if (aboutParagraphs[0]) {
+    aboutParagraphs[0].textContent =
+      'Desenvolvo produtos digitais unindo experiência de usuário e engenharia. Meus projetos passam por mobile, frontend, APIs, banco de dados, segurança, testes e deploy.';
+  }
+  if (aboutParagraphs[1]) {
+    aboutParagraphs[1].textContent =
+      'Além de implementar funcionalidades, procuro demonstrar decisões técnicas: quais invariantes o servidor protege, como falhas são testadas, como mudanças chegam à produção e como o sistema pode ser diagnosticado.';
+  }
 
   const experienceCards = $$('.experience-card');
-  if (experienceCards[2]) experienceCards[2].innerHTML = '<header><div><small>PROJETO INDEPENDENTE · WEB3 + FRONTEND</small><h3>ALPHA Lab / Builders</h3></div><span>Engenharia verificável</span></header><p>Laboratório público que combina Solidity, frontend moderno, automação e operação em Base Sepolia com limites financeiros explícitos.</p><ul><li>Hardhat, Solidity e contrato ERC-20 testado</li><li>Next.js, Cloudflare, Playwright, Axe e Lighthouse</li><li>CI/CD, ruleset protegido e deploy rastreável por SHA</li></ul><a href="https://github.com/Kadys-dv/ALPHA-Lab" target="_blank" rel="noopener">Explorar projeto no GitHub ↗</a>';
-  if (experienceCards[3]) experienceCards[3].innerHTML = '<header><div><small>PROJETO INDEPENDENTE · ARQUITETURA</small><h3>Fazer o Bem</h3></div><span>Sandbox / staging</span></header><p>Plataforma de ajuda mútua usada para exercitar arquitetura de sistemas financeiros com controles explícitos e operação segura em ambiente de testes.</p><ul><li>Ledger e auditoria encadeados, idempotência e reconciliação</li><li>WebAuthn, Redis, observabilidade e dual approval</li><li>Testes de carga, concorrência, chaos/DR e supply-chain security</li></ul><a href="https://github.com/Kadys-dv/fazerobem" target="_blank" rel="noopener">Explorar evidências no GitHub ↗</a>';
+  if (experienceCards[2]) {
+    experienceCards[2].innerHTML =
+      '<header><div><small>PROJETO INDEPENDENTE · WEB3 + FRONTEND</small><h3>ALPHA Lab / Builders</h3></div><span>Engenharia verificável</span></header><p>Laboratório público que combina Solidity, frontend moderno, automação e operação em Base Sepolia com limites financeiros explícitos.</p><ul><li>Hardhat, Solidity e contrato ERC-20 testado</li><li>Next.js, Cloudflare, Playwright, Axe e Lighthouse</li><li>CI/CD, ruleset protegido e deploy rastreável por SHA</li></ul><a href="https://github.com/Kadys-dv/ALPHA-Lab" target="_blank" rel="noopener">Explorar projeto no GitHub ↗</a>';
+  }
+  if (experienceCards[3]) {
+    experienceCards[3].innerHTML =
+      '<header><div><small>PROJETO INDEPENDENTE · ARQUITETURA</small><h3>Fazer o Bem</h3></div><span>Sandbox / staging</span></header><p>Plataforma de ajuda mútua usada para exercitar arquitetura de sistemas financeiros com controles explícitos e operação segura em ambiente de testes.</p><ul><li>Ledger e auditoria encadeados, idempotência e reconciliação</li><li>WebAuthn, Redis, observabilidade e dual approval</li><li>Testes de carga, concorrência, chaos/DR e supply-chain security</li></ul><a href="https://github.com/Kadys-dv/fazerobem" target="_blank" rel="noopener">Explorar evidências no GitHub ↗</a>';
+  }
 
   const projectsContainer = $('#projetos .container');
   const helpdesk = $('.helpdesk-case');
@@ -57,10 +77,11 @@ const applyHiringV2 = () => {
 
   if (helpdesk) {
     const previous = helpdesk.previousElementSibling;
-    if (previous && previous.classList.contains('engineering-showcase')) {
+    if (previous?.classList.contains('engineering-showcase')) {
       const label = document.createElement('div');
       label.className = 'secondary-projects-title reveal';
-      label.innerHTML = '<p class="eyebrow dark">Outros projetos</p><h3>Amplitude de produto e interface.</h3><p>Projetos complementares que demonstram experiência web e mobile.</p>';
+      label.innerHTML =
+        '<p class="eyebrow dark">Outros projetos</p><h3>Amplitude de produto e interface.</h3><p>Projetos complementares que demonstram experiência web e mobile.</p>';
       helpdesk.parentNode.insertBefore(label, helpdesk);
     }
   }
@@ -71,19 +92,48 @@ const applyHiringV2 = () => {
     if (heading) heading.textContent = 'Engenharia que consigo demonstrar.';
     const skills = $$('.skill', competencies);
     const skillContent = [
-      ['01', 'Backend & dados', 'Java 21, Spring Boot, APIs REST, PostgreSQL, Flyway, transações, concorrência e reconciliação.'],
-      ['02', 'Segurança', 'JWT, WebAuthn, autorização, idempotência, proteção contra replay, auditoria e gestão segura de segredos.'],
-      ['03', 'Qualidade', 'JUnit, testes de integração, Vitest, Playwright, Axe, Lighthouse, análise de logs e cenários negativos.'],
-      ['04', 'CI/CD & operação', 'GitHub Actions, Docker, Cloudflare, Vercel, gates de qualidade, deploy rastreável e observabilidade.'],
-      ['05', 'Mobile', 'Flutter, Dart, Firebase, mapas, notificações, Health Connect e validação em dispositivos Android reais.'],
-      ['06', 'Frontend', 'Next.js, React, TypeScript, acessibilidade, responsividade, SEO, desempenho e arquitetura BFF.'],
+      [
+        '01',
+        'Backend & dados',
+        'Java 21, Spring Boot, APIs REST, PostgreSQL, Flyway, transações, concorrência e reconciliação.',
+      ],
+      [
+        '02',
+        'Segurança',
+        'JWT, WebAuthn, autorização, idempotência, proteção contra replay, auditoria e gestão segura de segredos.',
+      ],
+      [
+        '03',
+        'Qualidade',
+        'JUnit, testes de integração, Vitest, Playwright, Axe, Lighthouse, análise de logs e cenários negativos.',
+      ],
+      [
+        '04',
+        'CI/CD & operação',
+        'GitHub Actions, Docker, Cloudflare, Vercel, gates de qualidade, deploy rastreável e observabilidade.',
+      ],
+      [
+        '05',
+        'Mobile',
+        'Flutter, Dart, Firebase, mapas, notificações, Health Connect e validação em dispositivos Android reais.',
+      ],
+      [
+        '06',
+        'Frontend',
+        'Next.js, React, TypeScript, acessibilidade, responsividade, SEO, desempenho e arquitetura BFF.',
+      ],
     ];
     skills.forEach((skill, index) => {
       const item = skillContent[index];
-      if (item) skill.innerHTML = `<span>${item[0]}</span><h3>${item[1]}</h3><p>${item[2]}</p>`;
+      if (item) {
+        skill.innerHTML = `<span>${item[0]}</span><h3>${item[1]}</h3><p>${item[2]}</p>`;
+      }
     });
     const strip = $('.evidence-strip', competencies);
-    if (strip) strip.innerHTML = '<span>✓ API REST</span><span>✓ PostgreSQL</span><span>✓ Concorrência</span><span>✓ WebAuthn</span><span>✓ Docker</span><span>✓ CI/CD</span><span>✓ Testes E2E</span><span>✓ Observabilidade</span>';
+    if (strip) {
+      strip.innerHTML =
+        '<span>✓ API REST</span><span>✓ PostgreSQL</span><span>✓ Concorrência</span><span>✓ WebAuthn</span><span>✓ Docker</span><span>✓ CI/CD</span><span>✓ Testes E2E</span><span>✓ Observabilidade</span>';
+    }
   }
 
   const certGrid = $('[data-cert-grid]');
@@ -94,7 +144,10 @@ const applyHiringV2 = () => {
     const title = $('h2', contact);
     const text = $('p:not(.eyebrow)', contact);
     if (title) title.textContent = 'Estou buscando minha próxima oportunidade como desenvolvedor.';
-    if (text) text.textContent = 'Tenho interesse em posições Júnior de Backend Java, Full Stack ou Mobile e estou disponível para conversar sobre projetos, desafios técnicos e oportunidades.';
+    if (text) {
+      text.textContent =
+        'Tenho interesse em posições Júnior de Backend Java, Full Stack ou Mobile e estou disponível para conversar sobre projetos, desafios técnicos e oportunidades.';
+    }
   }
 
   if (!$('#hiring-v2-styles')) {
@@ -110,8 +163,11 @@ const applyHiringV2 = () => {
   }
 };
 
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', applyHiringV2);
-else applyHiringV2();
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', applyHiringV2);
+} else {
+  applyHiringV2();
+}
 
 if (location.protocol === 'file:') {
   document.documentElement.classList.add('js');
