@@ -21,5 +21,20 @@
     "formatter": {
       "quoteStyle": "single"
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["tests/site.test.mjs"],
+      "formatter": {
+        "enabled": false
+      },
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noUselessEscapeInString": "off"
+          }
+        }
+      }
+    }
+  ]
 }
